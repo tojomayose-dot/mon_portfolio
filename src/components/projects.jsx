@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import TiltCard from './TiltCard';
 
 const projects = [
   {
@@ -39,7 +40,7 @@ export default function Projects() {
         Mes réalisations
       </motion.h2>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-3 gap-6" style={{ perspective: 1000 }}>
         {projects.map((project, i) => (
           <motion.div
             key={project.title}
@@ -47,24 +48,25 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
             viewport={{ once: true }}
-            className="group p-6 rounded-xl border border-border bg-surface/50 hover:border-accent/50 transition-all duration-300"
           >
-            <h3 className="text-xl font-semibold text-text mb-2 group-hover:text-accent transition-colors">
-              {project.title}
-            </h3>
-            <p className="text-text-muted text-sm mb-4 leading-relaxed">
-              {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 rounded-md bg-border/50 text-text-muted text-xs font-mono"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            <TiltCard className="group p-6 rounded-xl border border-border bg-surface/50 hover:border-accent/50 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-text mb-2 group-hover:text-accent transition-colors">
+                {project.title}
+              </h3>
+              <p className="text-text-muted text-sm mb-4 leading-relaxed">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 rounded-md bg-border/50 text-text-muted text-xs font-mono"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </TiltCard>
           </motion.div>
         ))}
       </div>
