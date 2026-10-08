@@ -8,7 +8,7 @@ export default function ThemeToggle({ theme, toggleTheme }) {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className="relative w-14 h-7 rounded-full border border-border bg-surface flex items-center px-1 transition-colors"
-      aria-label="Toggle theme"
+      aria-label="Changer de thème"
     >
       {/* Track */}
       <motion.div
