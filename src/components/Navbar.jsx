@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../hooks/useTheme';
+import ThemeToggle from './ThemeToogle';
 
 const links = [
   { label: 'about', href: '#about' },
@@ -11,11 +13,11 @@ const links = [
 export default function Navbar() {
   const [active, setActive] = useState('');
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-
       const sections = links.map(l => l.href.replace('#', ''));
       for (const id of [...sections].reverse()) {
         const el = document.getElementById(id);
@@ -25,7 +27,6 @@ export default function Navbar() {
         }
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -61,6 +62,9 @@ export default function Navbar() {
             )}
           </a>
         ))}
+
+        {/* Toggle ici */}
+        <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
       </div>
     </motion.nav>
   );
