@@ -1,16 +1,27 @@
 @import "tailwindcss";
 
+/* Le dark mode suit l'attribut data-theme posé par useTheme(), pas la préférence OS */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --color-bg: #F8F9FA;
   --color-surface: #FFFFFF;
   --color-text: #0A0A0A;
   --color-text-muted: #6B7280;
-  --color-accent: #22D3EE;
-  --color-accent-soft: #A78BFA;
+  --color-accent: #0E7490;
+  --color-accent-soft: #7C3AED;
   --color-border: #E5E7EB;
 
   --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  --radius-card: 20px;
+  --radius-btn: 14px;
+
+  /* Teintes douces utilisées par les cartes du Hero */
+  --color-tint: #E9F9FD;
+  --color-tint-2: #F3E8FF;
+  --color-ink: #0F172A;
 }
 
 [data-theme="dark"] {
@@ -21,15 +32,21 @@
   --color-accent: #22D3EE;
   --color-accent-soft: #A78BFA;
   --color-border: #2A2A2A;
+
+  --color-tint: color-mix(in srgb, var(--color-accent) 7%, var(--color-bg));
+  --color-tint-2: color-mix(in srgb, var(--color-accent-soft) 7%, var(--color-bg));
+  --color-ink: var(--color-text);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  scroll-behavior: smooth;
 }
 
 html {
   background: var(--color-bg);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -41,8 +58,14 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Indicateur de focus clavier, aligné sur l'accent du thème */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 ::selection {
-  background: rgba(34, 211, 238, 0.25);
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
   color: var(--color-text);
 }
 
@@ -54,7 +77,7 @@ body {
 .bento-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--radius-card);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
@@ -71,8 +94,8 @@ body {
   gap: 0.55rem;
   padding: 0.5rem 0.9rem;
   border-radius: 9999px;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.2);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
   color: var(--color-text);
   font-size: 0.7rem;
   letter-spacing: 0.22em;
@@ -86,14 +109,14 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
+  border-radius: var(--radius-btn);
   transition: all 0.3s ease;
   font-weight: 600;
 }
 
 .cta-primary {
-  background: #0A0A0A;
-  color: #FFFFFF;
+  background: var(--color-text);
+  color: var(--color-bg);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -109,7 +132,7 @@ body {
 }
 
 .cta-secondary:hover {
-  border-color: rgba(34, 211, 238, 0.4);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
 }
 
 /* ─── Scrollbar ─── */
@@ -124,4 +147,19 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-accent);
   border-radius: 999px;
+}
+
+/* ─── Mouvement réduit (accessibilité) ─── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
