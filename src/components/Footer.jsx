@@ -17,7 +17,7 @@ export default function Footer() {
       <div className="border-t border-border pt-12">
         <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr]">
           <div>
-            <span className="font-mono text-sm text-accent">~/portfolio</span>
+            <span className="font-mono text-sm text-accent-ink">~/portfolio</span>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-muted">
               Développeur full-stack en L3 Génie Logiciel, basé à Antananarivo, Madagascar.
               Ouvert aux stages et aux missions freelance.
@@ -33,7 +33,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-text-muted transition-colors duration-300 hover:text-accent"
+                    className="text-sm text-text-muted transition-colors duration-300 hover:text-accent-ink"
                   >
                     {link.label}
                   </a>
@@ -50,7 +50,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${EMAIL}`}
-                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent"
+                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent-ink"
                 >
                   <Mail size={14} />
                   Email
@@ -61,7 +61,7 @@ export default function Footer() {
                   href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent"
+                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent-ink"
                 >
                   <FaGithub size={14} />
                   GitHub
@@ -72,7 +72,7 @@ export default function Footer() {
                   href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent-soft"
+                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent"
                 >
                   <FaLinkedin size={14} />
                   LinkedIn
@@ -82,7 +82,7 @@ export default function Footer() {
                 <a
                   href={CV_URL}
                   download
-                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent"
+                  className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors duration-300 hover:text-accent-ink"
                 >
                   <Download size={14} />
                   CV (PDF)

@@ -54,7 +54,7 @@ export default function Hero() {
           </Reveal>
 
           <Reveal delay={0.16} className="bento-card flex flex-col justify-between p-5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-muted">Profil</p>
+            <p className="text-xs font-medium text-text-muted">Profil</p>
             <div>
               <h2 className="text-xl font-semibold text-text">Tojo Randrianantenaina</h2>
               <div className="mt-3 flex items-center gap-2 text-sm text-text-muted">
@@ -62,13 +62,13 @@ export default function Hero() {
                 Antananarivo, Madagascar
               </div>
             </div>
-            <span className="mt-4 inline-flex w-fit items-center rounded-full bg-tint px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-ink">
+            <span className="mt-4 inline-flex w-fit items-center rounded-full bg-tint px-3 py-1 text-xs font-medium text-ink">
               Ouvert aux missions
             </span>
           </Reveal>
 
           <Reveal delay={0.22} className="bento-card bg-tint p-5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/70">Stack</p>
+            <p className="text-xs font-medium text-ink/70">Stack</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {techStack.map((item) => (
                 <span
@@ -86,21 +86,21 @@ export default function Hero() {
               <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub" className="transition-colors duration-300 hover:text-accent">
                 <FaGithub size={22} />
               </a>
-              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition-colors duration-300 hover:text-accent-soft">
+              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition-colors duration-300 hover:text-accent">
                 <FaLinkedin size={22} />
               </a>
             </div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-muted">Réseaux</p>
+            <p className="text-xs font-medium text-text-muted">Réseaux</p>
           </Reveal>
 
           <Reveal delay={0.34} className="h-full">
             <a href="#projects" className="bento-card block h-full bg-tint-2 p-5 transition-all duration-300 hover:opacity-80">
               <div className="flex items-center justify-between">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/70">En cours de création</p>
+                <p className="text-xs font-medium text-ink/70">En cours de création</p>
                 <Sparkles size={14} className="text-accent-soft" />
               </div>
               <h3 className="mt-4 text-xl font-semibold text-ink">Portfolio v2</h3>
-              <div className="mt-4 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-ink/75">
+              <div className="mt-4 inline-flex items-center gap-2 text-xs font-medium text-ink/75">
                 Explorer
                 <ArrowUpRight size={14} />
               </div>
@@ -110,12 +110,12 @@ export default function Hero() {
           <Reveal delay={0.4} className="h-full">
             <a href={CV_URL} download className="bento-card flex h-full flex-col justify-between bg-tint p-5 transition-all duration-300 hover:opacity-80">
               <div className="flex items-center justify-between">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/70">CV</p>
+                <p className="text-xs font-medium text-ink/70">CV</p>
                 <Download size={15} className="text-ink" />
               </div>
               <div>
                 <p className="mt-6 text-2xl font-semibold text-ink">Résumé</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.16em] text-ink/70">Télécharger</p>
+                <p className="mt-2 text-xs text-ink/70">Télécharger</p>
               </div>
             </a>
           </Reveal>

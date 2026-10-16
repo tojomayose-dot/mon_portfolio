@@ -4,7 +4,14 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { EMAIL, GITHUB_URL, LINKEDIN_URL } from '../site';
 import Reveal from './Reveal';
 
-const FORM_ID = 'YOUR_FORM_ID';
+/* ID de formulaire Formspree (https://formspree.io) injecté via VITE_FORMSPREE_ID.
+   Sans configuration, le formulaire bascule sur un repli `mailto:` — jamais de faux succès. */
+const FORMSPREE = import.meta.env.VITE_FORMSPREE_ID?.trim();
+const FORM_ENDPOINT = FORMSPREE
+  ? FORMSPREE.startsWith('http')
+    ? FORMSPREE
+    : `https://formspree.io/f/${FORMSPREE}`
+  : null;
 
 const inputClassName =
   'mt-2 w-full border-b border-border bg-transparent px-0 py-3 text-text transition-colors duration-300 focus:border-accent focus:outline-none';
@@ -24,19 +31,21 @@ export default function Contact() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSending(true);
     setError('');
 
-    if (FORM_ID === 'YOUR_FORM_ID') {
-      await new Promise((resolve) => setTimeout(resolve, 700));
-      setIsSending(false);
+    // Repli sans backend : on ouvre le client mail avec le message pré-rempli.
+    if (!FORM_ENDPOINT) {
+      const subject = `Contact portfolio — ${formData.name || 'Nouveau message'}`;
+      const body = `${formData.message}\n\n— ${formData.name} (${formData.email})`;
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setIsSubmitted(true);
-      setFormData({ name: '', email: '', message: '' });
       return;
     }
 
+    setIsSending(true);
+
     try {
-      const response = await fetch(`https://formspree.io/f/${FORM_ID}`, {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -60,13 +69,13 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="mx-auto max-w-6xl px-6 py-32">
+    <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-32">
       <Reveal>
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent mb-6">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-ink mb-6">
           contact
         </p>
 
-        <h2 className="mb-6 text-5xl font-extrabold tracking-[-0.05em] text-text md:text-6xl">
+        <h2 className="mb-6 text-4xl font-extrabold tracking-[-0.05em] text-text md:text-5xl">
           Travaillons<br />ensemble
         </h2>
 
@@ -149,7 +158,7 @@ export default function Contact() {
             >
               {isSubmitted ? (
                 <>
-                  Envoyé <span aria-hidden="true">✓</span>
+                  {FORM_ENDPOINT ? 'Envoyé' : 'Ouvert'} <span aria-hidden="true">✓</span>
                 </>
               ) : (
                 <>
@@ -161,7 +170,7 @@ export default function Contact() {
 
             <a
               href={`mailto:${EMAIL}`}
-              className="inline-flex items-center gap-2 text-sm text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent"
+              className="inline-flex items-center gap-2 text-sm text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-ink"
             >
               <Mail size={16} />
               Email direct
@@ -175,7 +184,12 @@ export default function Contact() {
               error ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'
             }`}
           >
-            {error || (isSubmitted ? 'Merci, votre message a bien été envoyé.' : '')}
+            {error ||
+              (isSubmitted
+                ? FORM_ENDPOINT
+                  ? 'Merci, votre message a bien été envoyé.'
+                  : "Votre messagerie s'ouvre avec le message pré-rempli."
+                : '')}
           </p>
         </form>
       </Reveal>
@@ -186,7 +200,7 @@ export default function Contact() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
-          className="text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent"
+          className="text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-ink"
         >
           <FaGithub size={22} />
         </a>
@@ -195,7 +209,7 @@ export default function Contact() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          className="text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-soft"
+          className="text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent"
         >
           <FaLinkedin size={22} />
         </a>

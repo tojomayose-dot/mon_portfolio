@@ -11,6 +11,10 @@ const links = [
   { label: 'contact', href: '#contact' },
 ];
 
+/* Décalage aligné sur le `scroll-mt-24` des sections : l'onglet actif doit
+   s'activer exactement quand la section atteint la position d'ancrage. */
+const SCROLL_OFFSET = 96;
+
 export default function Navbar() {
   const [active, setActive] = useState('');
   const [scrolled, setScrolled] = useState(false);
@@ -25,13 +29,14 @@ export default function Navbar() {
 
       for (const id of [...sections].reverse()) {
         const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 150) {
+        if (el && window.scrollY >= el.offsetTop - SCROLL_OFFSET) {
           setActive(id);
           break;
         }
       }
     };
 
+    handleScroll(); // fixe l'état actif dès le chargement (ex. rechargement en plein scroll)
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -63,23 +68,35 @@ export default function Navbar() {
       }`}
     >
       <div className="relative mx-auto flex max-w-6xl items-center justify-between">
-        <span className="font-mono text-sm text-accent">~/portfolio</span>
+        <span className="font-mono text-sm text-accent-ink">~/portfolio</span>
 
         <div className="hidden items-center gap-8 md:flex">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`relative font-mono text-xs tracking-[0.18em] uppercase transition-colors duration-300 ${
-                active === link.href.replace('#', '') ? 'text-accent' : 'text-text-muted hover:text-text'
-              }`}
-            >
-              {link.label}
-              {active === link.href.replace('#', '') && (
-                <span className="absolute -bottom-1 left-0 right-0 h-px bg-accent transition-all duration-300" />
-              )}
-            </a>
-          ))}
+          {links.map((link) => {
+            const isActive = active === link.href.replace('#', '');
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? 'true' : undefined}
+                className={`relative font-mono text-xs tracking-[0.18em] uppercase transition-colors duration-300 ${
+                  isActive ? 'text-accent-ink' : 'text-text-muted hover:text-text'
+                }`}
+              >
+                {link.label}
+                {isActive &&
+                  (reducedMotion ? (
+                    <span className="absolute -bottom-1 left-0 right-0 h-px bg-accent" />
+                  ) : (
+                    /* Indicateur partagé : glisse d'un onglet à l'autre grâce au layoutId */
+                    <motion.span
+                      layoutId="nav-active-indicator"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      className="absolute -bottom-1 left-0 right-0 h-px bg-accent"
+                    />
+                  ))}
+              </a>
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-3">
@@ -116,7 +133,7 @@ export default function Navbar() {
                     href={link.href}
                     onClick={handleLinkClick}
                     className={`rounded-lg px-3 py-2 font-mono text-xs uppercase tracking-[0.18em] transition-colors duration-300 ${
-                      active === link.href.replace('#', '') ? 'bg-accent/10 text-accent' : 'text-text-muted hover:text-text'
+                      active === link.href.replace('#', '') ? 'bg-accent/10 text-accent-ink' : 'text-text-muted hover:text-text'
                     }`}
                   >
                     {link.label}

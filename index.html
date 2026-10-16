@@ -23,8 +23,11 @@
       content="Portfolio de Tojo Randrianantenaina, étudiant en L3 Génie Logiciel et développeur full-stack : React, Java / Spring Boot, Python / FastAPI et PostgreSQL."
     />
     <meta property="og:url" content="%SITE_URL%/" />
-    <meta property="og:image" content="%SITE_URL%/photo.jpg" />
-    <meta property="og:image:alt" content="Portrait de Tojo Randrianantenaina" />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tojo Randrianantenaina — Développeur Full-Stack" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Tojo Randrianantenaina — Développeur Full-Stack" />
@@ -32,10 +35,27 @@
       name="twitter:description"
       content="Portfolio de Tojo Randrianantenaina, étudiant en L3 Génie Logiciel et développeur full-stack : React, Java / Spring Boot, Python / FastAPI et PostgreSQL."
     />
-    <meta name="twitter:image" content="%SITE_URL%/photo.jpg" />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
 
     <meta name="theme-color" content="#F8F9FA" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Applique le thème mémorisé avant le premier rendu (évite le flash clair en dark mode).
+         Doit rester synchrone et placé dans <head>, avant le chargement du CSS. -->
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute('content', theme === 'dark' ? '#0A0A0A' : '#F8F9FA');
+        } catch {
+          /* localStorage indisponible : on garde le thème clair par défaut. */
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

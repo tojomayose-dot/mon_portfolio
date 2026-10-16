@@ -102,7 +102,7 @@ function ProjectVisual({ project }) {
   }
 
   return (
-    <div className="flex aspect-[4/3] flex-col overflow-hidden rounded-card border border-border bg-gradient-to-br from-accent/10 to-accent-soft/10 transition-all duration-500 group-hover:border-accent/30">
+    <div className="flex aspect-[4/3] flex-col overflow-hidden rounded-card border border-border bg-gradient-to-br from-accent/10 to-transparent transition-all duration-500 group-hover:border-accent/30">
       <div className="flex items-center gap-1.5 border-b border-border/60 px-4 py-3">
         <span className="h-2 w-2 rounded-full bg-accent/50" />
         <span className="h-2 w-2 rounded-full bg-accent-soft/50" />
@@ -130,12 +130,12 @@ export default function Editorial() {
          ╚══════════════════════════════════════════╝ */}
       <div id="about" className="scroll-mt-24">
         <Reveal>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent mb-6">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-ink mb-6">
             à propos
           </p>
 
           <div className="grid gap-16 md:grid-cols-[1fr_1.8fr]">
-            <h2 className="text-5xl font-extrabold leading-[1.05] tracking-[-0.05em] text-text md:text-6xl">
+            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-[-0.05em] text-text md:text-5xl">
               Qui<br />je suis
             </h2>
 
@@ -162,7 +162,7 @@ export default function Editorial() {
          ║  INTERLUDE — FEATURED PROJECT             ║
          ╚══════════════════════════════════════════╝ */}
       <div id="projects" className="scroll-mt-24">
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent mb-6">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-ink mb-6">
           projet à la une
         </p>
 
@@ -170,10 +170,10 @@ export default function Editorial() {
           <Reveal key={project.title}>
             <div className="group grid gap-10 md:grid-cols-[1.6fr_1fr] items-center">
               <div>
-                <h3 className="text-4xl font-bold tracking-[-0.04em] text-text md:text-5xl transition-colors duration-300 group-hover:text-accent">
+                <h3 className="text-3xl font-bold tracking-[-0.04em] text-text md:text-4xl transition-colors duration-300 group-hover:text-accent">
                   {project.title}
                 </h3>
-                <p className="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-accent">
+                <p className="mt-3 font-mono text-xs uppercase tracking-[0.2em] text-accent-ink">
                   {project.subtitle} · {project.year}
                 </p>
                 <p className="mt-6 text-lg leading-relaxed text-text-muted max-w-lg">
@@ -183,7 +183,7 @@ export default function Editorial() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-border px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-text-muted transition-colors duration-300 hover:border-accent hover:text-accent"
+                      className="rounded-full border border-border px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-text-muted transition-colors duration-300 hover:border-accent hover:text-accent-ink"
                     >
                       {tag}
                     </span>
@@ -206,7 +206,7 @@ export default function Editorial() {
                       href={project.demo}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-medium text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-soft"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent"
                     >
                       <ExternalLink size={16} />
                       Démo
@@ -233,7 +233,7 @@ export default function Editorial() {
       <Reveal>
         <div className="grid gap-16 md:grid-cols-[0.8fr_1.6fr]">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent mb-6">
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-ink mb-6">
               parcours
             </p>
             <div className="relative ml-4 pl-8">
@@ -264,7 +264,7 @@ export default function Editorial() {
          ╚══════════════════════════════════════════╝ */}
       <Reveal>
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent mb-10">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-ink mb-10">
             autres projets
           </p>
 
@@ -317,7 +317,7 @@ export default function Editorial() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={`Démo ${project.title}`}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:border-accent-soft hover:text-accent-soft"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent"
                     >
                       <ExternalLink size={16} />
                     </a>

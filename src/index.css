@@ -8,8 +8,18 @@
   --color-surface: #FFFFFF;
   --color-text: #0A0A0A;
   --color-text-muted: #6B7280;
-  --color-accent: #0E7490;
+
+  /*
+   * Accent principal (cyan) — une seule famille de teinte dans les deux thèmes.
+   * `--color-accent`      : usage décoratif (aplats, points, bordures, grands titres).
+   * `--color-accent-ink`  : même teinte, version accessible (≥ 4.5:1) pour le petit texte.
+   */
+  --color-accent: #0891B2;
+  --color-accent-ink: #0E7490;
+
+  /* Accent secondaire (violet) — réservé aux états « en cours / à venir / à apprendre ». */
   --color-accent-soft: #7C3AED;
+
   --color-border: #E5E7EB;
 
   --font-sans: "Inter", sans-serif;
@@ -18,9 +28,9 @@
   --radius-card: 20px;
   --radius-btn: 14px;
 
-  /* Teintes douces utilisées par les cartes du Hero */
-  --color-tint: #E9F9FD;
-  --color-tint-2: #F3E8FF;
+  /* Teintes douces du Hero — dérivées de l'accent, comme en thème sombre, pour rester cohérentes */
+  --color-tint: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg));
+  --color-tint-2: color-mix(in srgb, var(--color-accent-soft) 8%, var(--color-bg));
   --color-ink: #0F172A;
 }
 
@@ -30,6 +40,7 @@
   --color-text: #F1F1F1;
   --color-text-muted: #8A8A8A;
   --color-accent: #22D3EE;
+  --color-accent-ink: #22D3EE;
   --color-accent-soft: #A78BFA;
   --color-border: #2A2A2A;
 
