@@ -23,7 +23,9 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-bg min-h-screen text-text">
+    <div className="relative isolate bg-bg min-h-screen text-text">
+      <div aria-hidden="true" className="page-backdrop" />
+
       <Navbar />
 
       <main>
