@@ -1,52 +1,66 @@
 @import "tailwindcss";
 
-/* Le dark mode suit l'attribut data-theme posé par useTheme(), pas la préférence OS */
+/* Le thème suit l'attribut data-theme posé par useTheme(), pas la préférence OS. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
-  --color-bg: #F8F9FA;
+  /* ─── Tokens sémantiques — thème clair ─── */
+  --color-page: #F8FAFC;
   --color-surface: #FFFFFF;
-  --color-text: #0A0A0A;
-  --color-text-muted: #6B7280;
-
-  /*
-   * Accent principal (cyan) — une seule famille de teinte dans les deux thèmes.
-   * `--color-accent`      : usage décoratif (aplats, points, bordures, grands titres).
-   * `--color-accent-ink`  : même teinte, version accessible (≥ 4.5:1) pour le petit texte.
-   */
-  --color-accent: #0891B2;
-  --color-accent-ink: #0E7490;
-
-  /* Accent secondaire (violet) — réservé aux états « en cours / à venir / à apprendre ». */
-  --color-accent-soft: #7C3AED;
-
-  --color-border: #E5E7EB;
-
-  --font-sans: "Inter", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
-
-  --radius-card: 20px;
-  --radius-btn: 14px;
-
-  /* Teintes douces du Hero — dérivées de l'accent, comme en thème sombre, pour rester cohérentes */
-  --color-tint: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg));
-  --color-tint-2: color-mix(in srgb, var(--color-accent-soft) 8%, var(--color-bg));
+  --color-line: #E2E8F0;
   --color-ink: #0F172A;
+  --color-muted: #64748B;
+
+  /* Accent unique : bleu électrique. `brand-ink` est la version accessible
+     pour le petit texte sur fond clair (≥ 4.5:1). */
+  --color-brand: #3B82F6;
+  --color-brand-strong: #2563EB;
+  --color-brand-deep: #1D4ED8;
+  --color-brand-ink: #1D4ED8;
+
+  /* Bleu clair lisible sur les fonds bleu nuit (hero, contact, footer). */
+  --color-brand-light: #93C5FD;
+  --color-violet: #8B5CF6;
+
+  /* Fonds bleu nuit — fixes dans les deux thèmes. */
+  --color-night: #080F1E;
+  --color-night-surface: #111827;
+  --color-night-raised: #162034;
+  --color-night-input: #0B1424;
+  --color-night-line: #26344B;
+  --color-night-muted: #A8B5C9;
+  --color-night-text: #F8FAFC;
+
+  --color-success: #10B981;
+  --color-danger: #B91C1C;
+  --color-danger-light: #FCA5A5;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --radius-card: 16px;
+  --radius-btn: 12px;
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 28px -18px rgba(15, 23, 42, 0.28);
+  --shadow-card-hover: 0 2px 4px rgba(15, 23, 42, 0.05), 0 22px 46px -22px rgba(15, 23, 42, 0.32);
 }
 
+/* ─── Thème sombre ─── */
 [data-theme="dark"] {
-  --color-bg: #0B0D0F;
-  --color-surface: #16181B;
-  --color-text: #F1F1F1;
-  --color-text-muted: #8A8A8A;
-  --color-accent: #22D3EE;
-  --color-accent-ink: #22D3EE;
-  --color-accent-soft: #A78BFA;
-  --color-border: #26292D;
+  color-scheme: dark;
 
-  --color-tint: color-mix(in srgb, var(--color-accent) 7%, var(--color-bg));
-  --color-tint-2: color-mix(in srgb, var(--color-accent-soft) 7%, var(--color-bg));
-  --color-ink: var(--color-text);
+  --color-page: #080F1E;
+  --color-surface: #111827;
+  --color-line: #1F2A3D;
+  --color-ink: #F1F5F9;
+  --color-muted: #94A3B8;
+  --color-brand-ink: #93C5FD;
+
+  --color-danger: #FCA5A5;
+}
+
+:root {
+  color-scheme: light;
 }
 
 *,
@@ -56,197 +70,154 @@
 }
 
 html {
-  background: var(--color-bg);
+  background: var(--color-page);
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--color-page);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ─── Fond décoratif (halos + grille + grain) ─── */
-/*
- * Calque fixe placé dans un parent `relative isolate`.
- * `z-index: -1` le maintient au-dessus du fond de la page mais sous le contenu.
- */
-.page-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      60rem 42rem at 8% -12%,
-      color-mix(in srgb, var(--color-accent) 9%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      48rem 36rem at 96% 4%,
-      color-mix(in srgb, var(--color-accent-soft) 8%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      55rem 40rem at 50% 112%,
-      color-mix(in srgb, var(--color-accent) 5%, transparent),
-      transparent 72%
-    );
+#root {
+  min-height: 100dvh;
 }
 
-/* Grille fine estompée sur les bords */
-.page-backdrop::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-text) 7%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-text) 7%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 0%, #000 30%, transparent 78%);
-  mask-image: radial-gradient(ellipse 65% 55% at 50% 0%, #000 30%, transparent 78%);
-  opacity: 0.45;
-}
-
-/* Grain léger pour casser les aplats et le banding */
-.page-backdrop::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-  opacity: 0.025;
-}
-
-[data-theme="dark"] .page-backdrop {
-  background:
-    radial-gradient(
-      60rem 42rem at 8% -12%,
-      color-mix(in srgb, var(--color-accent) 14%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      48rem 36rem at 96% 4%,
-      color-mix(in srgb, var(--color-accent-soft) 12%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      55rem 40rem at 50% 112%,
-      color-mix(in srgb, var(--color-accent) 7%, transparent),
-      transparent 72%
-    );
-}
-
-[data-theme="dark"] .page-backdrop::before {
-  opacity: 0.3;
-}
-
-[data-theme="dark"] .page-backdrop::after {
-  opacity: 0.04;
-}
-
-/* Indicateur de focus clavier, aligné sur l'accent du thème */
+/* ─── Focus visible (WCAG 2.4.7 / 2.4.11) ─── */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
 
+.on-night :focus-visible {
+  outline-color: var(--color-brand-light);
+}
+
 ::selection {
-  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
-  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-brand) 28%, transparent);
+  color: var(--color-ink);
 }
 
-.font-mono {
-  font-family: var(--font-mono);
+.on-night ::selection {
+  background: color-mix(in srgb, var(--color-brand) 45%, transparent);
+  color: #ffffff;
 }
 
-/* ─── Cards ─── */
-.bento-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+/* ─── Briques réutilisables ─── */
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-ink;
+  }
+
+  .on-night .eyebrow {
+    @apply text-brand-light;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-btn px-5 py-3 text-sm font-semibold transition duration-200 ease-out;
+  }
+
+  .btn-primary {
+    @apply bg-brand-strong text-white shadow-[0_10px_24px_-12px_rgba(37,99,235,0.9)] hover:bg-brand-deep hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply border border-line bg-surface text-ink hover:border-brand hover:text-brand-ink hover:-translate-y-0.5;
+  }
+
+  .btn-night-outline {
+    @apply border border-white/20 bg-white/[0.02] text-night-text hover:border-white/40 hover:bg-white/[0.06] hover:-translate-y-0.5;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-md bg-brand/10 px-2.5 py-1 text-[11px] leading-4 text-brand-ink;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-surface shadow-card;
+  }
+
+  .field {
+    @apply mt-2 w-full rounded-[10px] border border-night-line bg-night-input px-4 py-3 text-sm text-night-text placeholder:text-night-muted transition-colors duration-200 focus:border-brand focus:outline-none;
+  }
+
+  .field[aria-invalid="true"] {
+    @apply border-danger-light;
+  }
 }
 
-.bento-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+/* ─── Décors discrets ─── */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 72% 68% at 62% 38%, #000 12%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 72% 68% at 62% 38%, #000 12%, transparent 78%);
 }
 
-/* ─── Hero badge ─── */
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
-  color: var(--color-text);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-family: var(--font-mono);
+.hero-halo {
+  background:
+    radial-gradient(38rem 34rem at 74% 34%, rgba(59, 130, 246, 0.32), transparent 68%),
+    radial-gradient(26rem 24rem at 92% 82%, rgba(139, 92, 246, 0.14), transparent 70%),
+    radial-gradient(34rem 26rem at 12% 8%, rgba(59, 130, 246, 0.12), transparent 72%);
 }
 
-/* ─── CTA Buttons ─── */
-.cta-primary,
-.cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-btn);
-  transition: all 0.3s ease;
-  font-weight: 600;
+/* Barre de filtres sans scrollbar visible sur mobile */
+.no-scrollbar {
+  scrollbar-width: none;
 }
 
-.cta-primary {
-  background: var(--color-text);
-  color: var(--color-bg);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-.cta-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+/* Flottement très léger des cartes du hero */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
 }
 
-.cta-secondary {
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
+.animate-float {
+  animation: float-soft 7s ease-in-out infinite;
 }
 
-.cta-secondary:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+.animate-float-delayed {
+  animation: float-soft 8.5s ease-in-out 1.2s infinite;
 }
 
 /* ─── Scrollbar ─── */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg);
+  background: var(--color-page);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-accent);
+  background: color-mix(in srgb, var(--color-brand) 70%, var(--color-page));
   border-radius: 999px;
 }
 
-/* ─── Mouvement réduit (accessibilité) ─── */
+/* ─── Accessibilité : mouvement réduit ─── */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -258,5 +229,20 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
+}
+
+/* Le dialogue natif gère Échap et le focus à l'ouverture/fermeture. */
+.project-dialog::backdrop {
+  background: rgb(8 15 30 / 78%);
+  backdrop-filter: blur(6px);
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
 }

@@ -10,13 +10,15 @@ import tailwindcss from '@tailwindcss/vite'
 function siteUrlPlugin(siteUrl) {
   return {
     name: 'inject-site-url',
-    transformIndexHtml: (html) => html.replaceAll('%SITE_URL%', siteUrl),
+    transformIndexHtml: (html) => siteUrl
+      ? html.replaceAll('%SITE_URL%', siteUrl)
+      : html.replace(/^.*(?:<link|<meta)[^\n]*%SITE_URL%[^\n]*\n/gm, ''),
   }
 }
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const siteUrl = (env.VITE_SITE_URL || 'https://votre-domaine.com').replace(/\/+$/, '')
+  const siteUrl = (env.VITE_SITE_URL || '').trim().replace(/\/+$/, '')
 
   return {
     plugins: [react(), tailwindcss(), siteUrlPlugin(siteUrl)],

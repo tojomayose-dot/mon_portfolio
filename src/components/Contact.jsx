@@ -1,7 +1,13 @@
-import { useState } from 'react';
-import { Mail, Send } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { BriefcaseBusiness, Mail, MapPin, Send } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { EMAIL, GITHUB_URL, LINKEDIN_URL } from '../site';
+import {
+  AVAILABILITY_SHORT,
+  EMAIL,
+  GITHUB_URL,
+  LINKEDIN_URL,
+  LOCATION,
+} from '../site';
 import Reveal from './Reveal';
 
 /* ID de formulaire Formspree (https://formspree.io) injecté via VITE_FORMSPREE_ID.
@@ -13,36 +19,98 @@ const FORM_ENDPOINT = FORMSPREE
     : `https://formspree.io/f/${FORMSPREE}`
   : null;
 
-const inputClassName =
-  'mt-2 w-full border-b border-border bg-transparent px-0 py-3 text-text transition-colors duration-300 focus:border-accent focus:outline-none';
+const EMPTY_FORM = { name: '', email: '', message: '' };
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validate(form) {
+  const errors = {};
+
+  if (!form.name.trim()) {
+    errors.name = 'Indiquez votre nom.';
+  } else if (form.name.trim().length < 2) {
+    errors.name = 'Le nom doit contenir au moins 2 caractères.';
+  }
+
+  if (!form.email.trim()) {
+    errors.email = 'Indiquez votre adresse email.';
+  } else if (!EMAIL_PATTERN.test(form.email.trim())) {
+    errors.email = 'Saisissez une adresse email valide.';
+  }
+
+  if (!form.message.trim()) {
+    errors.message = 'Écrivez votre message.';
+  } else if (form.message.trim().length < 10) {
+    errors.message = 'Le message doit contenir au moins 10 caractères.';
+  }
+
+  return errors;
+}
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [errors, setErrors] = useState({});
   const [isSending, setIsSending] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [status, setStatus] = useState({ type: 'idle', message: '' });
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const messageRef = useRef(null);
+
+  const fieldRefs = {
+    name: nameRef,
+    email: emailRef,
+    message: messageRef,
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (error) setError('');
-    if (isSubmitted) setIsSubmitted(false);
+    setFormData((previous) => ({ ...previous, [name]: value }));
+
+    if (errors[name]) {
+      setErrors((previous) => {
+        const next = { ...previous };
+        delete next[name];
+        return next;
+      });
+    }
+
+    if (status.type !== 'idle') {
+      setStatus({ type: 'idle', message: '' });
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
+    if (isSending) return;
+    const nextErrors = validate(formData);
 
-    // Repli sans backend : on ouvre le client mail avec le message pré-rempli.
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      setStatus({
+        type: 'error',
+        message: 'Veuillez corriger les champs indiqués avant de continuer.',
+      });
+      const firstInvalid = ['name', 'email', 'message'].find((field) => nextErrors[field]);
+      fieldRefs[firstInvalid]?.current?.focus();
+      return;
+    }
+
+    setErrors({});
+
+    // Repli sans backend : le client mail s'ouvre, mais l'envoi n'est pas confirmé.
     if (!FORM_ENDPOINT) {
-      const subject = `Contact portfolio — ${formData.name || 'Nouveau message'}`;
-      const body = `${formData.message}\n\n— ${formData.name} (${formData.email})`;
+      const subject = `Contact portfolio — ${formData.name.trim() || 'Nouveau message'}`;
+      const body = `${formData.message}\n\n— ${formData.name.trim()} (${formData.email.trim()})`;
+      setStatus({
+        type: 'mailto',
+        message:
+          "Votre messagerie s'ouvre avec le message pré-rempli. L'envoi n'est pas confirmé tant que vous ne l'avez pas envoyé.",
+      });
       window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      setIsSubmitted(true);
       return;
     }
 
     setIsSending(true);
+    setStatus({ type: 'idle', message: '' });
 
     try {
       const response = await fetch(FORM_ENDPOINT, {
@@ -51,168 +119,254 @@ export default function Contact() {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
       });
 
       if (!response.ok) {
         throw new Error('Erreur Formspree');
       }
 
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', message: '' });
+      setStatus({
+        type: 'sent',
+        message: 'Merci, votre message a bien été envoyé.',
+      });
+      setFormData(EMPTY_FORM);
     } catch (submitError) {
       console.error(submitError);
-      setError(`L'envoi a échoué. Réessayez, ou écrivez-moi directement à ${EMAIL}.`);
+      setStatus({
+        type: 'error',
+        message: `L'envoi a échoué. Réessayez, ou écrivez-moi directement à ${EMAIL}.`,
+      });
     } finally {
       setIsSending(false);
     }
   };
 
+  const describedBy = (field) => (errors[field] ? `contact-${field}-error` : undefined);
+
   return (
-    <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-32">
-      <Reveal>
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-ink mb-6">
-          contact
-        </p>
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="on-night relative scroll-mt-24 overflow-hidden bg-night py-16 text-night-text sm:py-20"
+    >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="hero-halo absolute inset-0 opacity-55" />
+        <div className="absolute -right-24 top-0 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
+      </div>
 
-        <h2 className="mb-6 text-4xl font-extrabold tracking-[-0.05em] text-text md:text-5xl">
-          Travaillons<br />ensemble
-        </h2>
+      <div className="shell relative">
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16">
+          {/* ─── Colonne éditoriale ─── */}
+          <Reveal>
+            <p className="eyebrow">
+              <span className="flex h-5 w-5 items-center justify-center rounded-[5px] border border-brand/30 bg-brand/15 text-brand-light">
+                <Mail size={11} aria-hidden="true" />
+              </span>
+              Contact
+            </p>
 
-        <p className="mb-14 max-w-lg text-lg leading-relaxed text-text-muted">
-          Je suis ouvert aux opportunités de stage, aux missions freelance et aux projets collaboratifs.
-          N'hésitez pas à me contacter pour échanger.
-        </p>
-      </Reveal>
-
-      <Reveal delay={0.05}>
-        <form onSubmit={handleSubmit} className="mb-14 max-w-3xl space-y-5">
-          <div className="grid gap-5 md:grid-cols-2">
-            <div>
-              <label
-                htmlFor="name"
-                className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-muted"
-              >
-                Nom
-              </label>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                autoComplete="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className={inputClassName}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-muted"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className={inputClassName}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="message"
-              className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-muted"
+            <h2
+              id="contact-title"
+              className="mt-4 text-[clamp(1.9rem,3vw,2.6rem)] font-extrabold leading-[1.02] tracking-[-0.045em] text-white"
             >
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows="5"
-              className={`${inputClassName} resize-none`}
-            />
-          </div>
+              Travaillons <span className="text-brand">ensemble</span>
+            </h2>
 
-          <div className="flex flex-col items-start gap-4 pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <button
-              type="submit"
-              disabled={isSending}
-              aria-busy={isSending}
-              className={`inline-flex items-center gap-2 rounded-btn px-6 py-3 font-medium transition-all duration-300 ${
-                isSubmitted
-                  ? 'bg-emerald-500 text-white'
-                  : 'bg-text text-bg hover:-translate-y-0.5 hover:opacity-90'
-              } ${isSending ? 'cursor-not-allowed opacity-70' : ''}`}
-            >
-              {isSubmitted ? (
-                <>
-                  {FORM_ENDPOINT ? 'Envoyé' : 'Ouvert'} <span aria-hidden="true">✓</span>
-                </>
-              ) : (
-                <>
-                  <Send size={16} />
-                  {isSending ? 'Envoi...' : 'Envoyer'}
-                </>
-              )}
-            </button>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-night-muted">
+              Une question, une opportunité de stage ou une mission freelance ? N'hésitez pas à
+              me contacter : je serais ravi d'échanger sur votre projet.
+            </p>
+
+            <ul className="mt-7 space-y-3 text-sm text-night-muted">
+              <li className="flex items-center gap-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-brand-light">
+                  <MapPin size={15} aria-hidden="true" />
+                </span>
+                {LOCATION}
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-brand-light">
+                  <BriefcaseBusiness size={15} aria-hidden="true" />
+                </span>
+                {AVAILABILITY_SHORT}
+              </li>
+            </ul>
+
+            <div className="mt-8 flex items-center gap-2.5">
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Profil GitHub de Tojo (nouvel onglet)"
+                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/15 bg-white/[0.03] text-night-muted transition-colors hover:border-white/35 hover:text-white"
+              >
+                <FaGithub size={18} aria-hidden="true" />
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Profil LinkedIn de Tojo (nouvel onglet)"
+                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/15 bg-white/[0.03] text-night-muted transition-colors hover:border-white/35 hover:text-white"
+              >
+                <FaLinkedin size={18} aria-hidden="true" />
+              </a>
+              <a
+                href={`mailto:${EMAIL}`}
+                aria-label={`Envoyer un email à ${EMAIL}`}
+                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/15 bg-white/[0.03] text-night-muted transition-colors hover:border-white/35 hover:text-white"
+              >
+                <Mail size={18} aria-hidden="true" />
+              </a>
+            </div>
 
             <a
               href={`mailto:${EMAIL}`}
-              className="inline-flex items-center gap-2 text-sm text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-ink"
+              className="mt-5 inline-block break-words text-sm text-brand-light underline decoration-brand/40 underline-offset-4 transition-colors hover:text-white"
             >
-              <Mail size={16} />
-              Email direct
+              {EMAIL}
             </a>
-          </div>
+          </Reveal>
 
-          <p
-            role="status"
-            aria-live={error ? 'assertive' : 'polite'}
-            className={`min-h-5 text-sm ${
-              error ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'
-            }`}
-          >
-            {error ||
-              (isSubmitted
-                ? FORM_ENDPOINT
-                  ? 'Merci, votre message a bien été envoyé.'
-                  : "Votre messagerie s'ouvre avec le message pré-rempli."
-                : '')}
-          </p>
-        </form>
-      </Reveal>
+          {/* ─── Formulaire ─── */}
+          <Reveal delay={0.08}>
+            <form
+              id="contact-form"
+              onSubmit={handleSubmit}
+              noValidate
+              aria-labelledby="contact-form-title"
+              className="rounded-card border border-white/10 bg-night-surface/90 p-5 shadow-[0_30px_80px_-45px_rgba(0,0,0,0.95)] backdrop-blur-md sm:p-7"
+            >
+              <h3 id="contact-form-title" className="sr-only">
+                Formulaire de contact
+              </h3>
 
-      <div className="flex items-center gap-6">
-        <a
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          className="text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-ink"
-        >
-          <FaGithub size={22} />
-        </a>
-        <a
-          href={LINKEDIN_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          className="text-text-muted transition-all duration-300 hover:-translate-y-0.5 hover:text-accent"
-        >
-          <FaLinkedin size={22} />
-        </a>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="contact-name" className="text-xs font-semibold text-white">
+                    Nom <span className="text-brand-light" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    ref={nameRef}
+                    id="contact-name"
+                    type="text"
+                    name="name"
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Votre nom"
+                    aria-invalid={Boolean(errors.name)}
+                    aria-describedby={describedBy('name')}
+                    className="field"
+                  />
+                  {errors.name && (
+                    <p id="contact-name-error" className="mt-1.5 text-xs text-danger-light">
+                      {errors.name}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="contact-email" className="text-xs font-semibold text-white">
+                    Email <span className="text-brand-light" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    ref={emailRef}
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="votre.email@exemple.com"
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={describedBy('email')}
+                    className="field"
+                  />
+                  {errors.email && (
+                    <p id="contact-email-error" className="mt-1.5 text-xs text-danger-light">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <label htmlFor="contact-message" className="text-xs font-semibold text-white">
+                  Message <span className="text-brand-light" aria-hidden="true">*</span>
+                </label>
+                <textarea
+                  ref={messageRef}
+                  id="contact-message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows="5"
+                  placeholder="Votre message..."
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={describedBy('message')}
+                  className="field resize-y"
+                />
+                {errors.message && (
+                  <p id="contact-message-error" className="mt-1.5 text-xs text-danger-light">
+                    {errors.message}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSending}
+                aria-busy={isSending}
+                className={`btn btn-primary mt-6 w-full ${isSending ? 'cursor-not-allowed opacity-70' : ''}`}
+              >
+                <Send size={16} aria-hidden="true" />
+                {isSending ? 'Envoi...' : FORM_ENDPOINT ? 'Envoyer le message' : 'Ouvrir ma messagerie'}
+              </button>
+
+              <p className="mt-3 text-[11px] leading-relaxed text-night-muted">
+                Les champs marqués d'un <span className="text-brand-light">*</span> sont
+                obligatoires.
+                {!FORM_ENDPOINT && ' Votre messagerie s’ouvrira avec votre message prérempli.'}
+              </p>
+
+              <div
+                role={status.type === 'error' ? 'alert' : 'status'}
+                aria-live={status.type === 'error' ? 'assertive' : 'polite'}
+                className={`mt-3 min-h-5 text-sm leading-relaxed ${
+                  status.type === 'error'
+                    ? 'text-danger-light'
+                    : status.type === 'sent'
+                      ? 'text-emerald-300'
+                      : status.type === 'mailto'
+                        ? 'text-brand-light'
+                        : 'text-night-muted'
+                }`}
+              >
+                {status.type === 'error' && status.message.includes(EMAIL) ? (
+                  <>
+                    L'envoi a échoué. Réessayez, ou écrivez-moi directement à{' '}
+                    <a href={`mailto:${EMAIL}`} className="underline underline-offset-2">
+                      {EMAIL}
+                    </a>
+                    .
+                  </>
+                ) : (
+                  status.message
+                )}
+              </div>
+            </form>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
