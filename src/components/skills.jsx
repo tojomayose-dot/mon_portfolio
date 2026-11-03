@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Code2 } from 'lucide-react';
 import { FaJava } from 'react-icons/fa';
 import {
@@ -37,59 +35,7 @@ const skillIcons = {
 
 const groups = Object.entries(skills);
 
-/* Aplatit la source en évitant les doublons éventuels entre catégories. */
-const allSkills = [];
-const seen = new Set();
-for (const [category, items] of groups) {
-  for (const name of items) {
-    if (seen.has(name)) continue;
-    seen.add(name);
-    allSkills.push({ name, category });
-  }
-}
-
-const filters = [
-  { id: 'all', label: 'Toutes', count: allSkills.length },
-  ...groups
-    .map(([category, items]) => ({
-      id: category,
-      label: category,
-      count: items.filter((name, index) => items.indexOf(name) === index).length,
-    }))
-    .filter((filter) => filter.count > 0),
-];
-
-function SkillCard({ skill }) {
-  const config = skillIcons[skill.name] ?? { Icon: Code2, color: null };
-  const { Icon, color } = config;
-
-  return (
-    <div
-      title={`${skill.name} — ${skill.category}`}
-      className="group flex min-h-[96px] flex-col items-center justify-center gap-2 rounded-[12px] border border-line bg-surface px-2 py-3 text-center shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition duration-200 hover:-translate-y-0.5 hover:border-brand/35 hover:shadow-card"
-    >
-      <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-page transition-colors duration-200 group-hover:border-brand/25 group-hover:bg-brand/5">
-        <Icon
-          size={26}
-          aria-hidden="true"
-          className={color ? undefined : 'text-ink'}
-          style={color ? { color } : undefined}
-        />
-      </span>
-      <span className="text-[11px] font-medium leading-tight text-ink">{skill.name}</span>
-    </div>
-  );
-}
-
 export default function Skills() {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const reducedMotion = useReducedMotion();
-
-  const filteredSkills =
-    activeFilter === 'all'
-      ? allSkills
-      : allSkills.filter((skill) => skill.category === activeFilter);
-
   return (
     <section id="skills" aria-labelledby="skills-title" className="scroll-mt-24 bg-page py-16 sm:py-20">
       <div className="shell">
@@ -111,64 +57,26 @@ export default function Skills() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <div
-            role="group"
-            aria-label="Filtrer les compétences par catégorie"
-            className="mt-7 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6"
-          >
-            {filters.map((filter) => {
-              const isActive = activeFilter === filter.id;
-              return (
-                <button
-                  key={filter.id}
-                  type="button"
-                  onClick={() => setActiveFilter(filter.id)}
-                  aria-pressed={isActive}
-                  aria-label={`${filter.label} — ${filter.count} compétence${filter.count > 1 ? 's' : ''}`}
-                  className={`inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-[10px] border px-4 py-2 text-xs font-semibold transition-colors duration-200 ${
-                    isActive
-                      ? 'border-brand-strong bg-brand-strong text-white'
-                      : 'border-line bg-surface text-muted hover:border-brand/40 hover:text-brand-ink'
-                  }`}
-                >
-                  {filter.label}
-                  <span
-                    aria-hidden="true"
-                    className={`font-mono text-[10px] ${isActive ? 'text-white' : 'text-muted'}`}
-                  >
-                    {filter.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </Reveal>
-
-        <p className="sr-only" role="status" aria-live="polite">
-          {filteredSkills.length} compétence{filteredSkills.length > 1 ? 's' : ''} affichée
-          {filteredSkills.length > 1 ? 's' : ''}.
-        </p>
-
-        <motion.ul
-          layout={!reducedMotion}
-          className="mt-8 grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-3 md:grid-cols-6 xl:grid-cols-12"
-        >
-          <AnimatePresence mode="popLayout" initial={false}>
-            {filteredSkills.map((skill) => (
-              <motion.li
-                key={skill.name}
-                layout={!reducedMotion}
-                initial={reducedMotion ? false : { opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={reducedMotion ? undefined : { opacity: 0, scale: 0.97 }}
-                transition={{ duration: reducedMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <SkillCard skill={skill} />
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </motion.ul>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {groups.map(([category, items], index) => (
+            <Reveal key={category} delay={index * 0.05} className="card p-5 sm:p-6">
+              <h3 className="text-base font-semibold text-ink">{category}</h3>
+              <ul className="mt-5 flex flex-col gap-4">
+                {items.map((name) => {
+                  const { Icon, color } = skillIcons[name] ?? { Icon: Code2, color: null };
+                  return (
+                    <li key={name} className="flex items-center gap-3">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-line bg-page">
+                        <Icon size={23} aria-hidden="true" style={color ? { color } : undefined} />
+                      </span>
+                      <span className="text-sm font-medium text-ink">{name}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

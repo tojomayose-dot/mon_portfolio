@@ -1,12 +1,11 @@
 import {
   ArrowRight,
-  BriefcaseBusiness,
   Mail,
   MapPin,
 } from 'lucide-react';
 import { FaGithub, FaJava, FaLinkedin } from 'react-icons/fa';
 import { SiPostgresql, SiPython, SiReact } from 'react-icons/si';
-import { AVAILABILITY, AVAILABILITY_SHORT, EMAIL, GITHUB_URL, LINKEDIN_URL } from '../site';
+import { AVAILABILITY, EMAIL, FULL_NAME, GITHUB_URL, LINKEDIN_URL, LOCATION } from '../site';
 import Reveal from './Reveal';
 
 const techStack = [
@@ -41,21 +40,20 @@ export default function Hero() {
               {AVAILABILITY}
             </p>
 
+            <p className="mt-7 text-sm font-medium leading-relaxed text-night-muted">
+              Bonjour, je suis <span className="text-white">{FULL_NAME}</span>
+            </p>
+
             <h1
               id="hero-title"
-              className="mt-7 text-[clamp(2.2rem,4.2vw,3.4rem)] font-extrabold leading-[1.08] tracking-[-0.045em] text-white"
+              className="mt-3 max-w-xl text-[clamp(2.5rem,5vw,4rem)] font-extrabold leading-[1.08] tracking-[-0.045em] text-white"
             >
-              Développeur<br />
-              <span className="whitespace-nowrap">Full-Stack.</span>
-              <br />
-              Des idées aux
-              <br />
-              <span className="text-brand">applications concrètes.</span>
+              Développeur <span className="whitespace-nowrap text-brand-light">full-stack.</span>
             </h1>
 
             <p className="mt-6 max-w-[36rem] text-base leading-relaxed text-night-muted sm:text-[17px]">
-              Étudiant en L3 Génie Logiciel, je conçois et développe des applications web en
-              alliant interfaces intuitives, architectures robustes et technologies modernes.
+              Des idées aux applications concrètes. Étudiant en L3 Génie Logiciel, je développe
+              des interfaces intuitives et les systèmes qui les font fonctionner.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
@@ -71,15 +69,9 @@ export default function Hero() {
             <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-[13px] text-night-muted">
               <span className="inline-flex items-center gap-2">
                 <MapPin size={15} className="text-brand-light" aria-hidden="true" />
-                Antananarivo, Madagascar
+                {LOCATION}
               </span>
               <span className="hidden h-4 w-px bg-white/15 sm:block" aria-hidden="true" />
-              <span className="inline-flex items-center gap-2">
-                <BriefcaseBusiness size={15} className="text-brand-light" aria-hidden="true" />
-                {AVAILABILITY_SHORT}
-              </span>
-
-              <span className="hidden h-4 w-px bg-white/15 md:block" aria-hidden="true" />
 
               <span className="flex items-center gap-1.5">
                 <a
@@ -87,7 +79,7 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Profil GitHub de Tojo (nouvel onglet)"
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-night-muted transition-colors hover:bg-white/[0.06] hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-night-muted transition-colors hover:bg-white/[0.06] hover:text-white"
                 >
                   <FaGithub size={18} aria-hidden="true" />
                 </a>
@@ -96,14 +88,14 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Profil LinkedIn de Tojo (nouvel onglet)"
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-night-muted transition-colors hover:bg-white/[0.06] hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-night-muted transition-colors hover:bg-white/[0.06] hover:text-white"
                 >
                   <FaLinkedin size={18} aria-hidden="true" />
                 </a>
                 <a
                   href={`mailto:${EMAIL}`}
                   aria-label="Envoyer un email à Tojo"
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-night-muted transition-colors hover:bg-white/[0.06] hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-night-muted transition-colors hover:bg-white/[0.06] hover:text-white"
                 >
                   <Mail size={18} aria-hidden="true" />
                 </a>
@@ -111,7 +103,7 @@ export default function Hero() {
             </div>
           </Reveal>
 
-          {/* ─── Portrait et cartes flottantes ─── */}
+          {/* ─── Portrait et technologies principales ─── */}
           <Reveal delay={0.12} y={22} className="relative mx-auto w-full max-w-[360px] sm:max-w-[390px] lg:mr-10">
             <div
               aria-hidden="true"
@@ -125,7 +117,9 @@ export default function Hero() {
             <div className="relative rounded-[20px] border border-white/10 bg-brand/10 p-1.5 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur-sm">
               <div className="relative overflow-hidden rounded-[18px] bg-night-surface">
                 <img
-                  src="/photo.png"
+                  src="/portrait-800.webp"
+                  srcSet="/portrait-480.webp 480w, /portrait-800.webp 800w"
+                  sizes="(min-width: 640px) 390px, (max-width: 399px) calc(100vw - 40px), 360px"
                   alt="Portrait de Tojo Randrianantenaina"
                   width="1122"
                   height="1402"
@@ -147,49 +141,9 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Carte projets complets */}
-              <div className="animate-float absolute -left-3 top-10 w-[140px] rounded-2xl border border-white/10 bg-night-surface/90 p-3.5 shadow-2xl shadow-black/50 backdrop-blur-md sm:-left-6 sm:top-14 sm:w-[150px] sm:p-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl font-bold leading-none text-white">3+</span>
-                  <div className="flex items-center gap-1 text-emerald-400">
-                    <span className="flex h-5 w-5 items-center justify-center rounded bg-emerald-500/20 text-[10px]">
-                      ✉
-                    </span>
-                    <span className="flex h-5 w-5 items-center justify-center rounded bg-emerald-500/20 text-[10px]">
-                      📈
-                    </span>
-                  </div>
-                </div>
-                <p className="mt-2 text-[11px] leading-snug text-night-muted">Projets complets</p>
-              </div>
-
-              {/* Annotation Tojo / Développeur avec flèche dessinée */}
-              <div className="pointer-events-none absolute -right-2 top-4 select-none sm:-right-16 sm:top-8">
-                <div className="text-right">
-                  <p className="font-serif italic text-lg font-medium text-white/90 sm:text-xl">Tojo</p>
-                  <p className="text-[11px] text-night-muted -mt-0.5">Développeur</p>
-                </div>
-                <svg
-                  className="ml-auto mt-1 h-8 w-8 text-brand -rotate-12"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                >
-                  <path d="M28 6 C15 12, 10 24, 18 34 M18 34 L12 28 M18 34 L24 30" />
-                </svg>
-              </div>
-
-              {/* Carte formation L3 */}
-              <div className="absolute right-[-10px] top-1/2 -translate-y-1/2 rounded-2xl border border-white/10 bg-night-surface/90 p-3.5 shadow-2xl shadow-black/50 backdrop-blur-md sm:right-[-18px] sm:p-4">
-                <p className="text-2xl font-bold leading-none text-white">L3</p>
-                <p className="mt-1 text-[11px] leading-snug text-night-muted">Génie Logiciel</p>
-              </div>
-
               {/* Carte technologies */}
-              <div className="animate-float-delayed absolute -bottom-5 right-0 w-[min(88%,280px)] sm:-right-12 rounded-xl border border-white/10 bg-night-surface/90 p-3 shadow-2xl shadow-black/40 backdrop-blur-md sm:bottom-4 sm:p-4">
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-night-muted">
+              <div className="absolute bottom-3 inset-x-3 sm:inset-x-4 rounded-xl border border-white/10 bg-night-surface/90 p-3 shadow-2xl shadow-black/40 backdrop-blur-md sm:bottom-4 sm:p-4">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-night-muted">
                   Technologies principales
                 </p>
                 <ul className="mt-2.5 flex items-center gap-2.5 sm:gap-3" aria-label="Technologies principales">

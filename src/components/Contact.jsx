@@ -240,13 +240,19 @@ export default function Contact() {
               onSubmit={handleSubmit}
               noValidate
               aria-labelledby="contact-form-title"
+              aria-describedby="contact-form-help"
               className="rounded-card border border-white/10 bg-night-surface/90 p-5 shadow-[0_30px_80px_-45px_rgba(0,0,0,0.95)] backdrop-blur-md sm:p-7"
             >
-              <h3 id="contact-form-title" className="sr-only">
-                Formulaire de contact
+              <h3 id="contact-form-title" className="text-lg font-semibold text-white">
+                Un projet, une opportunité ?
               </h3>
+              <p id="contact-form-help" className="mt-2 text-sm leading-relaxed text-night-muted">
+                {FORM_ENDPOINT
+                  ? 'Écrivez-moi directement avec ce formulaire.'
+                  : 'Préparez votre message ici, puis envoyez-le depuis votre messagerie.'}
+              </p>
 
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="mt-6 grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="contact-name" className="text-xs font-semibold text-white">
                     Nom <span className="text-brand-light" aria-hidden="true">*</span>
@@ -333,7 +339,7 @@ export default function Contact() {
                 {isSending ? 'Envoi...' : FORM_ENDPOINT ? 'Envoyer le message' : 'Ouvrir ma messagerie'}
               </button>
 
-              <p className="mt-3 text-[11px] leading-relaxed text-night-muted">
+              <p className="mt-3 text-xs leading-relaxed text-night-muted">
                 Les champs marqués d'un <span className="text-brand-light">*</span> sont
                 obligatoires.
                 {!FORM_ENDPOINT && ' Votre messagerie s’ouvrira avec votre message prérempli.'}
