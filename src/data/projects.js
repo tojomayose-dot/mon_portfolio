@@ -1,8 +1,33 @@
 import { GITHUB_URL } from '../site';
 
-/* Contenus réels des projets. Les visuels sont des illustrations CSS
-   (aucune capture d'application n'est inventée). */
+const rizicoleScreenshots = [
+  { src: '/Laravel/Capture d’écran du 2026-11-12 09-47-35.png', alt: 'Tableau de bord de Rizicole : production, consommation d’eau et rentabilité' },
+  { src: '/Laravel/Capture d’écran du 2026-11-12 09-49-39.png', alt: 'Cartographie interactive des parcelles rizicoles et délimitation des contours' },
+  { src: '/Laravel/Capture d’écran du 2026-11-12 09-50-04.png', alt: 'Suivi des activités techniques par campagne et par parcelle' },
+  { src: '/Laravel/Capture d’écran du 2026-11-12 09-50-17.png', alt: 'Gestion de l’irrigation, des quotas d’eau et du régime hydrique des parcelles' },
+  { src: '/Laravel/Capture d’écran du 2026-11-12 09-50-23.png', alt: 'Suivi des finances et de la rentabilité des campagnes agricoles' },
+  { src: '/Laravel/Capture d’écran du 2026-11-12 09-47-08.png', alt: 'Page de connexion à la plateforme Rizicole' },
+];
+
+/* Captures réelles lorsqu’elles sont disponibles, illustrations CSS sinon. */
 export const projects = [
+  {
+    title: 'Rizicole SaaS',
+    subtitle: 'Gestion d’exploitations agricoles',
+    badge: 'SaaS',
+    year: '2026',
+    mark: 'RZ',
+    category: 'web',
+    image: rizicoleScreenshots[0].src,
+    screenshots: rizicoleScreenshots,
+    description: 'Plateforme SaaS de gestion des exploitations rizicoles, avec cartographie interactive et suivi des activités agricoles.',
+    details: 'Développement d’une application web SaaS dédiée à la gestion des exploitations rizicoles, permettant de centraliser le suivi des parcelles, des campagnes agricoles, de l’irrigation, des stocks, des récoltes et des finances. La plateforme intègre une cartographie interactive pour visualiser et délimiter les parcelles agricoles, ainsi qu’un tableau de bord pour faciliter le suivi des activités et la prise de décision.',
+    architecture: 'SaaS multi-tenant avec gestion des rôles et des autorisations.',
+    tags: ['React.js', 'Laravel', 'MySQL', 'Leaflet.js'],
+    github: null,
+    demo: null,
+    featured: true,
+  },
   {
     title: 'Mada-ID',
     subtitle: 'Certification numérique',

@@ -4,9 +4,7 @@ import { ArrowRight, ArrowUpRight, LayoutGrid, Lock, X } from 'lucide-react';
 import { categoryLabels, projectCategories, projects } from '../data/projects';
 import Reveal from './Reveal';
 
-/* ─── Aperçus conceptuels, dessinés en CSS ───
-   Aucune capture réelle n'existe dans le dépôt : ces vignettes sont
-   explicitement étiquetées « Illustration » et ne prétendent pas en être. */
+/* Aperçus conceptuels en CSS pour les projets sans capture réelle. */
 function PreviewContent({ variant, mark }) {
   if (variant === 'api') {
     return (
@@ -325,6 +323,38 @@ function ProjectCard({ project, onSelect }) {
   );
 }
 
+function ProjectGallery({ project }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeScreenshot = project.screenshots[activeIndex];
+
+  return (
+    <div>
+      <figure>
+        <div className="aspect-video overflow-hidden rounded-[10px] border border-line bg-page">
+          <img src={activeScreenshot.src} alt={activeScreenshot.alt} decoding="async" className="h-full w-full object-contain" />
+        </div>
+        <figcaption className="mt-2 text-sm leading-relaxed text-muted" aria-live="polite">
+          {activeScreenshot.alt}
+        </figcaption>
+      </figure>
+      <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6" role="group" aria-label="Captures du projet">
+        {project.screenshots.map((screenshot, index) => (
+          <button
+            key={screenshot.src}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            aria-label={`Afficher la capture ${index + 1} : ${screenshot.alt}`}
+            aria-pressed={activeIndex === index}
+            className={`min-h-11 overflow-hidden rounded-lg border-2 p-1 transition-colors ${activeIndex === index ? 'border-brand-strong' : 'border-line hover:border-brand/50'}`}
+          >
+            <img src={screenshot.src} alt="" loading="lazy" decoding="async" className="aspect-video w-full rounded object-contain" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ProjectDetails({ project, onClose }) {
   const dialogRef = useRef(null);
 
@@ -346,7 +376,7 @@ function ProjectDetails({ project, onClose }) {
       onClick={(event) => {
         if (event.target === event.currentTarget) dialogRef.current.close();
       }}
-      className="project-dialog m-auto max-h-[85dvh] w-[calc(100%_-_2rem)] max-w-xl overflow-y-auto rounded-card border border-line bg-surface p-0 text-ink shadow-2xl"
+      className={`project-dialog m-auto max-h-[85dvh] w-[calc(100%_-_2rem)] ${project.screenshots?.length ? 'max-w-4xl' : 'max-w-xl'} overflow-y-auto rounded-card border border-line bg-surface p-0 text-ink shadow-2xl`}
     >
       <div className="p-5 sm:p-7">
         <div className="mb-5 flex items-start justify-between gap-4">
@@ -358,8 +388,9 @@ function ProjectDetails({ project, onClose }) {
             <X size={20} aria-hidden="true" />
           </button>
         </div>
-        <ProjectPreview project={project} />
+        {project.screenshots?.length ? <ProjectGallery project={project} /> : <ProjectPreview project={project} />}
         <p className="mt-5 text-base leading-relaxed text-muted">{project.details || project.description}</p>
+        {project.architecture && <p className="mt-3 text-sm leading-relaxed text-muted"><span className="font-semibold text-ink">Architecture : </span>{project.architecture}</p>}
         <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technologies utilisées">
           {project.tags.map((tag) => <li key={tag} className="tag">{tag}</li>)}
         </ul>
