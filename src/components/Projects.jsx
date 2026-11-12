@@ -330,7 +330,7 @@ function ProjectGallery({ project }) {
   return (
     <div>
       <figure>
-        <div className="aspect-video overflow-hidden rounded-[10px] border border-line bg-page">
+        <div className={`${activeScreenshot.portrait ? 'h-[60dvh]' : 'aspect-video'} overflow-hidden rounded-[10px] border border-line bg-page`}>
           <img src={activeScreenshot.src} alt={activeScreenshot.alt} decoding="async" className="h-full w-full object-contain" />
         </div>
         <figcaption className="mt-2 text-sm leading-relaxed text-muted" aria-live="polite">

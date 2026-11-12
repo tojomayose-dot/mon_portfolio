@@ -1,5 +1,18 @@
 import { GITHUB_URL } from '../site';
 
+const madaidScreenshots = [
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-13-10.png', alt: 'Tableau de bord de Mada-ID : citoyens, institutions, certificats et dernières activités' },
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-13-15.png', alt: 'Gestion des citoyens et recherche des identités numériques' },
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-13-19.png', alt: 'Gestion des institutions et des organismes certifiés de Mada-ID' },
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-13-38.png', alt: 'Livre de Vie : historique des documents officiels et signatures vérifiées' },
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-13-25.png', alt: 'QR code d’un certificat à scanner avec Mada-ID Wallet' },
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-13-59.png', alt: 'Vérification de l’authenticité d’un document par signature Ed25519' },
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-42-03.png', alt: 'Page d’accueil de la plateforme d’identité numérique Mada-ID' },
+  { src: '/MADAID/Capture d’écran du 2026-11-12 11-41-54.png', alt: 'Page de connexion à la plateforme Mada-ID' },
+  { src: '/MADAID/Screenshot_20260529-080529.png', alt: 'Vue mobile du Livre de Vie et des documents certifiés', portrait: true },
+  { src: '/MADAID/Screenshot_20260529-111416.png', alt: 'Vue mobile du QR code d’un certificat de naissance', portrait: true },
+];
+
 const rizicoleScreenshots = [
   { src: '/Laravel/Capture d’écran du 2026-11-12 09-47-35.png', alt: 'Tableau de bord de Rizicole : production, consommation d’eau et rentabilité' },
   { src: '/Laravel/Capture d’écran du 2026-11-12 09-49-39.png', alt: 'Cartographie interactive des parcelles rizicoles et délimitation des contours' },
@@ -35,7 +48,8 @@ export const projects = [
     year: '2026',
     mark: 'MI',
     category: 'backend',
-    preview: 'api',
+    image: madaidScreenshots[0].src,
+    screenshots: madaidScreenshots,
     description:
       'Certification et vérification de documents numériques.',
     details: 'Backend d’API REST pour certifier des diplômes et des actes officiels. Les signatures Ed25519 et les empreintes SHA-256 permettent de vérifier l’intégrité et l’authenticité des documents.',
