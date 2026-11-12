@@ -37,7 +37,7 @@
     />
     <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
 
-    <meta name="theme-color" content="#F8FAFC" />
+    <meta name="theme-color" />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -49,9 +49,6 @@
         try {
           const theme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
           document.documentElement.setAttribute('data-theme', theme);
-          document
-            .querySelector('meta[name="theme-color"]')
-            ?.setAttribute('content', theme === 'dark' ? '#080F1E' : '#F8FAFC');
         } catch {
           /* localStorage indisponible : on garde le thème clair par défaut. */
         }

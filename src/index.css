@@ -1,66 +1,79 @@
 @import "tailwindcss";
 
-/* Le thème suit l'attribut data-theme posé par useTheme(), pas la préférence OS. */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
-@theme {
-  /* ─── Tokens sémantiques — thème clair ─── */
-  --color-page: #F8FAFC;
-  --color-surface: #FFFFFF;
-  --color-line: #E2E8F0;
-  --color-ink: #0F172A;
-  --color-muted: #64748B;
-
-  /* Accent unique : bleu électrique. `brand-ink` est la version accessible
-     pour le petit texte sur fond clair (≥ 4.5:1). */
-  --color-brand: #3B82F6;
-  --color-brand-strong: #2563EB;
-  --color-brand-deep: #1D4ED8;
-  --color-brand-ink: #1D4ED8;
-
-  /* Bleu clair lisible sur les fonds bleu nuit (hero, contact, footer). */
-  --color-brand-light: #93C5FD;
-  --color-violet: #8B5CF6;
-
-  /* Fonds bleu nuit — fixes dans les deux thèmes. */
-  --color-night: #080F1E;
-  --color-night-surface: #111827;
-  --color-night-raised: #162034;
-  --color-night-input: #0B1424;
-  --color-night-line: #26344B;
-  --color-night-muted: #A8B5C9;
-  --color-night-text: #F8FAFC;
-
-  --color-success: #10B981;
-  --color-danger: #B91C1C;
-  --color-danger-light: #FCA5A5;
-
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
-
-  --radius-card: 16px;
-  --radius-btn: 12px;
-
-  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 28px -18px rgba(15, 23, 42, 0.28);
-  --shadow-card-hover: 0 2px 4px rgba(15, 23, 42, 0.05), 0 22px 46px -22px rgba(15, 23, 42, 0.32);
-}
-
-/* ─── Thème sombre ─── */
-[data-theme="dark"] {
-  color-scheme: dark;
-
-  --color-page: #080F1E;
-  --color-surface: #111827;
-  --color-line: #1F2A3D;
-  --color-ink: #F1F5F9;
-  --color-muted: #94A3B8;
-  --color-brand-ink: #93C5FD;
-
-  --color-danger: #FCA5A5;
-}
-
+/* Palette unique : aucune couleur d’interface n’est définie dans les composants. */
 :root {
   color-scheme: light;
+  --bg: #FBF6EE;
+  --surface: #FFFFFF;
+  --text: #2B2540;
+  --text-muted: #5A5470;
+  --border: #E6DCCB;
+  --accent: #FF6B4A;
+  --accent-hover: #FF8266;
+  --on-accent: #2B2540;
+  --link: #C2410C;
+  --pastel-rose: #F6D5D0;
+  --pastel-bleu: #CFE3EC;
+  --pastel-sauge: #CFDDC8;
+  --pastel-jaune: #F7E7A1;
+
+  /* Rôles utilisés par Tailwind ; le thème sombre réutilise la même palette. */
+  --page-bg: var(--bg);
+  --panel-bg: var(--surface);
+  --foreground: var(--text);
+  --subtle: var(--text-muted);
+  --separator: var(--border);
+  --link-color: var(--link);
+  --control-border: var(--text-muted);
+  --focus-color: var(--text);
+  --section-rose: var(--pastel-rose);
+  --section-blue: var(--pastel-bleu);
+  --section-sage: var(--pastel-sauge);
+  --card-shadow: 0 8px 24px color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-*: initial;
+  --color-page: var(--page-bg);
+  --color-surface: var(--panel-bg);
+  --color-ink: var(--foreground);
+  --color-muted: var(--subtle);
+  --color-line: var(--separator);
+  --color-control: var(--control-border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+  --color-link: var(--link-color);
+  --color-soft-rose: var(--section-rose);
+  --color-soft-blue: var(--section-blue);
+  --color-soft-sage: var(--section-sage);
+  --color-soft-yellow: var(--pastel-jaune);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --shadow-sm: var(--card-shadow);
+  --shadow-lg: var(--card-shadow);
+  --shadow-2xl: var(--card-shadow);
+  --shadow-card: var(--card-shadow);
+  --shadow-card-hover: var(--card-shadow);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: var(--text);
+  --panel-bg: color-mix(in srgb, var(--text) 90%, var(--text-muted));
+  --foreground: var(--bg);
+  --subtle: var(--pastel-bleu);
+  --separator: var(--text-muted);
+  --link-color: var(--pastel-rose);
+  --control-border: var(--pastel-bleu);
+  --focus-color: var(--bg);
+  --section-rose: color-mix(in srgb, var(--text) 92%, var(--pastel-rose));
+  --section-blue: color-mix(in srgb, var(--text) 92%, var(--pastel-bleu));
+  --section-sage: color-mix(in srgb, var(--text) 92%, var(--pastel-sauge));
 }
 
 *,
@@ -70,15 +83,15 @@
 }
 
 html {
-  background: var(--color-page);
+  background: var(--page-bg);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background: var(--color-page);
-  color: var(--color-ink);
+  background: var(--page-bg);
+  color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
@@ -90,38 +103,52 @@ body {
   min-height: 100dvh;
 }
 
-/* ─── Focus visible (WCAG 2.4.7 / 2.4.11) ─── */
 :focus-visible {
-  outline: 2px solid var(--color-brand);
-  outline-offset: 3px;
-}
-
-.on-night :focus-visible {
-  outline-color: var(--color-brand-light);
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-brand) 28%, transparent);
-  color: var(--color-ink);
+  background: var(--pastel-jaune);
+  color: var(--text);
 }
 
-.on-night ::selection {
-  background: color-mix(in srgb, var(--color-brand) 45%, transparent);
-  color: #ffffff;
+/* --link ne passe pas 4.5:1 sur les pastels : liens prune dans ces sections.
+   Les cartes et formulaires opaques retrouvent le lien terre cuite sur blanc. */
+.section-pastel,
+.hero-gradient {
+  --link-color: var(--foreground);
 }
 
-/* ─── Briques réutilisables ─── */
+.card,
+.project-dialog,
+#contact-form {
+  --link-color: var(--link);
+}
+
+[data-theme="dark"] :is(.card, .project-dialog, #contact-form) {
+  --link-color: var(--pastel-rose);
+}
+
+a:not(.btn):not([aria-label]):not(nav a) {
+  color: var(--link-color);
+  text-decoration-line: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-color: currentColor;
+}
+
+a:not(.btn):not([aria-label]):not(nav a):hover {
+  color: var(--foreground);
+}
+
+/* Briques réutilisables ; les dimensions et la typographie restent inchangées. */
 @layer components {
   .shell {
     @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-ink;
-  }
-
-  .on-night .eyebrow {
-    @apply text-brand-light;
+    @apply inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-ink;
   }
 
   .btn {
@@ -129,19 +156,24 @@ body {
   }
 
   .btn-primary {
-    @apply bg-brand-strong text-white shadow-[0_10px_24px_-12px_rgba(37,99,235,0.9)] hover:bg-brand-deep hover:-translate-y-0.5 active:translate-y-0;
+    @apply bg-accent text-on-accent shadow-card hover:bg-accent-hover hover:-translate-y-px active:translate-y-0;
   }
 
-  .btn-outline {
-    @apply border border-line bg-surface text-ink hover:border-brand hover:text-brand-ink hover:-translate-y-0.5;
-  }
-
+  .btn-outline,
   .btn-night-outline {
-    @apply border border-white/20 bg-white/[0.02] text-night-text hover:border-white/40 hover:bg-white/[0.06] hover:-translate-y-0.5;
+    @apply border bg-transparent text-ink hover:-translate-y-0.5;
+    border-width: 1.5px;
+    border-color: var(--foreground);
+  }
+
+  .btn-outline:hover,
+  .btn-night-outline:hover {
+    background: var(--pastel-rose);
+    color: var(--text);
   }
 
   .tag {
-    @apply inline-flex items-center rounded-md bg-brand/10 px-2.5 py-1 text-[11px] leading-4 text-brand-ink;
+    @apply inline-flex items-center rounded-md bg-soft-blue px-2.5 py-1 text-[11px] leading-4 text-ink;
   }
 
   .card {
@@ -149,32 +181,59 @@ body {
   }
 
   .field {
-    @apply mt-2 w-full rounded-[10px] border border-night-line bg-night-input px-4 py-3 text-sm text-night-text placeholder:text-night-muted transition-colors duration-200 focus:border-brand focus:outline-none;
+    @apply mt-2 w-full rounded-[10px] border border-control bg-page px-4 py-3 text-sm text-ink placeholder:text-muted transition-colors duration-200 focus:border-ink;
   }
 
   .field[aria-invalid="true"] {
-    @apply border-danger-light;
+    border-color: var(--link-color);
+    border-style: dashed;
   }
 }
 
-/* ─── Décors discrets ─── */
+.hero-gradient {
+  background: linear-gradient(120deg, var(--section-rose), var(--section-blue));
+}
+
 .hero-grid {
   background-image:
-    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in srgb, var(--text) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text) 8%, transparent) 1px, transparent 1px);
   background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 72% 68% at 62% 38%, #000 12%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 72% 68% at 62% 38%, #000 12%, transparent 78%);
+  mask-image: radial-gradient(ellipse 72% 68% at 62% 38%, var(--text) 12%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 72% 68% at 62% 38%, var(--text) 12%, transparent 78%);
 }
 
 .hero-halo {
   background:
-    radial-gradient(38rem 34rem at 74% 34%, rgba(59, 130, 246, 0.32), transparent 68%),
-    radial-gradient(26rem 24rem at 92% 82%, rgba(139, 92, 246, 0.14), transparent 70%),
-    radial-gradient(34rem 26rem at 12% 8%, rgba(59, 130, 246, 0.12), transparent 72%);
+    radial-gradient(38rem 34rem at 74% 34%, color-mix(in srgb, var(--section-blue) 32%, transparent), transparent 68%),
+    radial-gradient(26rem 24rem at 92% 82%, color-mix(in srgb, var(--section-rose) 14%, transparent), transparent 70%),
+    radial-gradient(34rem 26rem at 12% 8%, color-mix(in srgb, var(--section-blue) 12%, transparent), transparent 72%);
 }
 
-/* Barre de filtres sans scrollbar visible sur mobile */
+.portrait-halo {
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--section-blue) 28%, transparent), transparent 68%);
+}
+
+.preview-chart {
+  background: conic-gradient(var(--section-blue) 0deg 236deg, var(--section-rose) 236deg 300deg, var(--separator) 300deg 360deg);
+}
+
+/* Un second repère visuel accompagne toujours l’état actif. */
+nav a[aria-current="location"] {
+  text-decoration-line: underline;
+  text-underline-offset: 0.25em;
+}
+
+#project-filters button[aria-pressed="true"] {
+  text-decoration-line: underline;
+  text-underline-offset: 0.2em;
+}
+
+[aria-label="Captures du projet"] button[aria-pressed="true"] {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
 .no-scrollbar {
   scrollbar-width: none;
 }
@@ -183,7 +242,6 @@ body {
   display: none;
 }
 
-/* Flottement très léger des cartes du hero */
 @keyframes float-soft {
   0%,
   100% {
@@ -202,22 +260,20 @@ body {
   animation: float-soft 8.5s ease-in-out 1.2s infinite;
 }
 
-/* ─── Scrollbar ─── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-page);
+  background: var(--page-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--color-brand) 70%, var(--color-page));
+  background: var(--subtle);
   border-radius: 999px;
 }
 
-/* ─── Accessibilité : mouvement réduit ─── */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -233,9 +289,8 @@ body {
   }
 }
 
-/* Le dialogue natif gère Échap et le focus à l'ouverture/fermeture. */
 .project-dialog::backdrop {
-  background: rgb(8 15 30 / 78%);
+  background: color-mix(in srgb, var(--text) 78%, transparent);
   backdrop-filter: blur(6px);
 }
 
@@ -245,4 +300,88 @@ button, a {
 
 button:not(:disabled) {
   cursor: pointer;
+}
+
+/* Direction éditoriale : continuité du fond, surfaces calmes et accents locaux. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.hero-halo {
+  background: radial-gradient(ellipse at 85% 30%, color-mix(in srgb, var(--section-blue) 45%, transparent), transparent 60%);
+}
+
+.card,
+.project-dialog,
+#contact-form {
+  border-radius: var(--radius-card);
+  box-shadow: none;
+}
+
+.card:hover {
+  box-shadow: none;
+}
+
+.project-artwork {
+  background: var(--section-blue);
+  border: 1px solid var(--separator);
+}
+
+.project-artwork > img {
+  padding: 0.75rem;
+}
+
+#about,
+#skills,
+#contact {
+  border-top: 1px solid var(--separator);
+}
+
+#contact > [aria-hidden="true"] {
+  opacity: 0.25;
+}
+
+/* Accents locaux et signature graphique, partagés dans les deux thèmes. */
+.hero-signature {
+  position: relative;
+  isolation: isolate;
+}
+.hero-signature::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto -0.03em 0.06em;
+  height: 0.22em;
+  border-radius: 45% 30% 40% 25%;
+  background: var(--section-rose);
+  transform: rotate(-1.5deg);
+}
+.project-artwork[data-tone="sage"] { background: var(--section-sage); }
+.project-artwork[data-tone="rose"] { background: var(--section-rose); }
+.project-card { transition: background-color 200ms ease, transform 300ms ease; }
+.project-card:is(:hover, :focus-within) {
+  background: color-mix(in srgb, var(--panel-bg) 85%, var(--section-blue));
+}
+.project-arrow { transition: transform 200ms ease; }
+.project-card:is(:hover, :focus-within) .project-arrow { transform: translate(2px, -2px); }
+@media (prefers-reduced-motion: reduce) {
+  .project-card:is(:hover, :focus-within) { transform: none; }
+  .project-card:is(:hover, :focus-within) .project-arrow { transform: none; }
+  .project-card img { transform: none !important; }
+}
+
+/* Le décor appartient au fond ; aucun filtre ne modifie le portrait. */
+.portrait-stage {
+  isolation: isolate;
+}
+.portrait-stage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 15% 0 0;
+  border-radius: 48% 44% 18% 20%;
+  background: linear-gradient(145deg, var(--section-blue), var(--section-rose));
 }

@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
 
-/* Couleur de la barre du navigateur (mobile), synchronisée avec le thème actif */
-const THEME_COLORS = {
-  light: '#F8FAFC',
-  dark: '#080F1E',
-};
-
 export function useTheme() {
   const [theme, setTheme] = useState(() => {
     try {
@@ -26,7 +20,9 @@ export function useTheme() {
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', THEME_COLORS[theme]);
+      const pageColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--page-bg').trim();
+      themeColorMeta.setAttribute('content', pageColor);
     }
   }, [theme]);
 

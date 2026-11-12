@@ -152,11 +152,11 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-title"
-      className="on-night relative scroll-mt-24 overflow-hidden bg-night py-16 text-night-text sm:py-20"
+      className="section-pastel relative scroll-mt-24 overflow-hidden bg-page py-16 text-ink sm:py-20"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="hero-halo absolute inset-0 opacity-55" />
-        <div className="absolute -right-24 top-0 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
+        <div className="absolute -right-24 top-0 h-80 w-80 rounded-full bg-soft-blue/10 blur-3xl" />
       </div>
 
       <div className="shell relative">
@@ -164,7 +164,7 @@ export default function Contact() {
           {/* ─── Colonne éditoriale ─── */}
           <Reveal>
             <p className="eyebrow">
-              <span className="flex h-5 w-5 items-center justify-center rounded-[5px] border border-brand/30 bg-brand/15 text-brand-light">
+              <span className="flex h-5 w-5 items-center justify-center rounded-[5px] border border-line bg-soft-blue/15 text-ink">
                 <Mail size={11} aria-hidden="true" />
               </span>
               Contact
@@ -172,25 +172,25 @@ export default function Contact() {
 
             <h2
               id="contact-title"
-              className="mt-4 text-[clamp(1.9rem,3vw,2.6rem)] font-extrabold leading-[1.02] tracking-[-0.045em] text-white"
+              className="mt-4 text-[clamp(1.9rem,3vw,2.6rem)] font-bold leading-[1.02] tracking-[-0.025em] text-ink"
             >
-              Travaillons <span className="text-brand">ensemble</span>
+              Travaillons <span className="text-ink">ensemble</span>
             </h2>
 
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-night-muted">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-muted">
               Une question, une opportunité de stage ou une mission freelance ? N'hésitez pas à
               me contacter : je serais ravi d'échanger sur votre projet.
             </p>
 
-            <ul className="mt-7 space-y-3 text-sm text-night-muted">
+            <ul className="mt-7 space-y-3 text-sm text-muted">
               <li className="flex items-center gap-3">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-brand-light">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-line bg-surface/[0.04] text-ink">
                   <MapPin size={15} aria-hidden="true" />
                 </span>
                 {LOCATION}
               </li>
               <li className="flex items-center gap-3">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-brand-light">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-line bg-surface/[0.04] text-ink">
                   <BriefcaseBusiness size={15} aria-hidden="true" />
                 </span>
                 {AVAILABILITY_SHORT}
@@ -203,7 +203,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Profil GitHub de Tojo (nouvel onglet)"
-                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/15 bg-white/[0.03] text-night-muted transition-colors hover:border-white/35 hover:text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-line bg-surface/[0.03] text-muted transition-colors hover:border-control hover:bg-accent hover:text-on-accent"
               >
                 <FaGithub size={18} aria-hidden="true" />
               </a>
@@ -212,14 +212,14 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Profil LinkedIn de Tojo (nouvel onglet)"
-                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/15 bg-white/[0.03] text-night-muted transition-colors hover:border-white/35 hover:text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-line bg-surface/[0.03] text-muted transition-colors hover:border-control hover:bg-accent hover:text-on-accent"
               >
                 <FaLinkedin size={18} aria-hidden="true" />
               </a>
               <a
                 href={`mailto:${EMAIL}`}
                 aria-label={`Envoyer un email à ${EMAIL}`}
-                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-white/15 bg-white/[0.03] text-night-muted transition-colors hover:border-white/35 hover:text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-line bg-surface/[0.03] text-muted transition-colors hover:border-control hover:bg-accent hover:text-on-accent"
               >
                 <Mail size={18} aria-hidden="true" />
               </a>
@@ -227,7 +227,7 @@ export default function Contact() {
 
             <a
               href={`mailto:${EMAIL}`}
-              className="mt-5 inline-block break-words text-sm text-brand-light underline decoration-brand/40 underline-offset-4 transition-colors hover:text-white"
+              className="mt-5 inline-block break-words text-sm text-link underline decoration-current underline-offset-4 transition-colors hover:text-ink"
             >
               {EMAIL}
             </a>
@@ -241,12 +241,12 @@ export default function Contact() {
               noValidate
               aria-labelledby="contact-form-title"
               aria-describedby="contact-form-help"
-              className="rounded-card border border-white/10 bg-night-surface/90 p-5 shadow-[0_30px_80px_-45px_rgba(0,0,0,0.95)] backdrop-blur-md sm:p-7"
+              className="rounded-card border border-line bg-surface p-5 sm:p-7"
             >
-              <h3 id="contact-form-title" className="text-lg font-semibold text-white">
+              <h3 id="contact-form-title" className="text-lg font-semibold text-ink">
                 Un projet, une opportunité ?
               </h3>
-              <p id="contact-form-help" className="mt-2 text-sm leading-relaxed text-night-muted">
+              <p id="contact-form-help" className="mt-2 text-sm leading-relaxed text-muted">
                 {FORM_ENDPOINT
                   ? 'Écrivez-moi directement avec ce formulaire.'
                   : 'Préparez votre message ici, puis envoyez-le depuis votre messagerie.'}
@@ -254,8 +254,8 @@ export default function Contact() {
 
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="contact-name" className="text-xs font-semibold text-white">
-                    Nom <span className="text-brand-light" aria-hidden="true">*</span>
+                  <label htmlFor="contact-name" className="text-xs font-semibold text-ink">
+                    Nom <span className="text-ink" aria-hidden="true">*</span>
                   </label>
                   <input
                     ref={nameRef}
@@ -272,15 +272,15 @@ export default function Contact() {
                     className="field"
                   />
                   {errors.name && (
-                    <p id="contact-name-error" className="mt-1.5 text-xs text-danger-light">
+                    <p id="contact-name-error" className="mt-1.5 text-xs text-link">
                       {errors.name}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="contact-email" className="text-xs font-semibold text-white">
-                    Email <span className="text-brand-light" aria-hidden="true">*</span>
+                  <label htmlFor="contact-email" className="text-xs font-semibold text-ink">
+                    Email <span className="text-ink" aria-hidden="true">*</span>
                   </label>
                   <input
                     ref={emailRef}
@@ -298,7 +298,7 @@ export default function Contact() {
                     className="field"
                   />
                   {errors.email && (
-                    <p id="contact-email-error" className="mt-1.5 text-xs text-danger-light">
+                    <p id="contact-email-error" className="mt-1.5 text-xs text-link">
                       {errors.email}
                     </p>
                   )}
@@ -306,8 +306,8 @@ export default function Contact() {
               </div>
 
               <div className="mt-5">
-                <label htmlFor="contact-message" className="text-xs font-semibold text-white">
-                  Message <span className="text-brand-light" aria-hidden="true">*</span>
+                <label htmlFor="contact-message" className="text-xs font-semibold text-ink">
+                  Message <span className="text-ink" aria-hidden="true">*</span>
                 </label>
                 <textarea
                   ref={messageRef}
@@ -323,7 +323,7 @@ export default function Contact() {
                   className="field resize-y"
                 />
                 {errors.message && (
-                  <p id="contact-message-error" className="mt-1.5 text-xs text-danger-light">
+                  <p id="contact-message-error" className="mt-1.5 text-xs text-link">
                     {errors.message}
                   </p>
                 )}
@@ -339,8 +339,8 @@ export default function Contact() {
                 {isSending ? 'Envoi...' : FORM_ENDPOINT ? 'Envoyer le message' : 'Ouvrir ma messagerie'}
               </button>
 
-              <p className="mt-3 text-xs leading-relaxed text-night-muted">
-                Les champs marqués d'un <span className="text-brand-light">*</span> sont
+              <p className="mt-3 text-xs leading-relaxed text-muted">
+                Les champs marqués d'un <span className="text-ink">*</span> sont
                 obligatoires.
                 {!FORM_ENDPOINT && ' Votre messagerie s’ouvrira avec votre message prérempli.'}
               </p>
@@ -350,12 +350,12 @@ export default function Contact() {
                 aria-live={status.type === 'error' ? 'assertive' : 'polite'}
                 className={`mt-3 min-h-5 text-sm leading-relaxed ${
                   status.type === 'error'
-                    ? 'text-danger-light'
+                    ? 'text-link'
                     : status.type === 'sent'
-                      ? 'text-emerald-300'
+                      ? 'text-ink'
                       : status.type === 'mailto'
-                        ? 'text-brand-light'
-                        : 'text-night-muted'
+                        ? 'text-ink'
+                        : 'text-muted'
                 }`}
               >
                 {status.type === 'error' && status.message.includes(EMAIL) ? (

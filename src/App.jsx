@@ -39,7 +39,7 @@ function App() {
     <div className="relative min-h-screen bg-page text-ink">
       <a
         href="#main-content"
-        className="sr-only z-[60] rounded-btn bg-white px-4 py-3 text-sm font-semibold text-night shadow-lg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        className="sr-only z-[60] rounded-btn bg-surface px-4 py-3 text-sm font-semibold text-ink shadow-lg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
       >
         Aller au contenu principal
       </a>

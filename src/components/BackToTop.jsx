@@ -5,7 +5,7 @@ export default function BackToTop({ visible }) {
   const reducedMotion = useReducedMotion();
 
   const buttonClassName =
-    'fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-brand-strong text-white shadow-[0_14px_30px_-12px_rgba(37,99,235,0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-deep';
+    'fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-line bg-surface text-ink shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-soft-rose';
 
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });

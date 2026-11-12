@@ -19,36 +19,36 @@ import Reveal from './Reveal';
 /* Icônes associées aux compétences réellement présentes dans src/data/skills.js.
    Aucune compétence n'est ajoutée ici : cette table ne fait qu'illustrer. */
 const skillIcons = {
-  React: { Icon: SiReact, color: '#61DAFB' },
-  JavaScript: { Icon: SiJavascript, color: '#D4A600' },
-  TypeScript: { Icon: SiTypescript, color: '#3178C6' },
-  Java: { Icon: FaJava, color: '#ED8B00' },
-  'Spring Boot': { Icon: SiSpringboot, color: '#6DB33F' },
-  Python: { Icon: SiPython, color: '#3776AB' },
-  FastAPI: { Icon: SiFastapi, color: '#009688' },
-  PostgreSQL: { Icon: SiPostgresql, color: '#4169E1' },
-  MySQL: { Icon: SiMysql, color: '#4479A1' },
-  Git: { Icon: SiGit, color: '#F05032' },
-  Docker: { Icon: SiDocker, color: '#2496ED' },
-  Figma: { Icon: SiFigma, color: '#F24E1E' },
+  React: { Icon: SiReact },
+  JavaScript: { Icon: SiJavascript },
+  TypeScript: { Icon: SiTypescript },
+  Java: { Icon: FaJava },
+  'Spring Boot': { Icon: SiSpringboot },
+  Python: { Icon: SiPython },
+  FastAPI: { Icon: SiFastapi },
+  PostgreSQL: { Icon: SiPostgresql },
+  MySQL: { Icon: SiMysql },
+  Git: { Icon: SiGit },
+  Docker: { Icon: SiDocker },
+  Figma: { Icon: SiFigma },
 };
 
 const groups = Object.entries(skills);
 
 export default function Skills() {
   return (
-    <section id="skills" aria-labelledby="skills-title" className="scroll-mt-24 bg-page py-16 sm:py-20">
+    <section id="skills" aria-labelledby="skills-title" className="section-pastel scroll-mt-24 bg-page py-12 sm:py-20">
       <div className="shell">
         <Reveal className="max-w-2xl">
           <p className="eyebrow">
-            <span className="flex h-5 w-5 items-center justify-center rounded-[5px] border border-brand/25 bg-brand/10 text-brand-ink">
+            <span className="flex h-5 w-5 items-center justify-center rounded-[5px] border border-line bg-soft-blue/10 text-ink">
               <Code2 size={11} aria-hidden="true" />
             </span>
             Mon expertise
           </p>
           <h2
             id="skills-title"
-            className="mt-4 text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1.04] tracking-[-0.045em] text-ink"
+            className="mt-4 text-[clamp(2rem,4vw,3rem)] font-bold leading-[1.04] tracking-[-0.025em] text-ink"
           >
             Compétences
           </h2>
@@ -57,17 +57,17 @@ export default function Skills() {
           </p>
         </Reveal>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-8 grid gap-x-8 gap-y-7 grid-cols-2 xl:grid-cols-4">
           {groups.map(([category, items], index) => (
-            <Reveal key={category} delay={index * 0.05} className="card p-5 sm:p-6">
+            <Reveal key={category} delay={index * 0.05} className="border-t border-control pt-5">
               <h3 className="text-base font-semibold text-ink">{category}</h3>
-              <ul className="mt-5 flex flex-col gap-4">
+              <ul className="mt-4 flex flex-col gap-3">
                 {items.map((name) => {
-                  const { Icon, color } = skillIcons[name] ?? { Icon: Code2, color: null };
+                  const { Icon } = skillIcons[name] ?? { Icon: Code2 };
                   return (
                     <li key={name} className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-line bg-page">
-                        <Icon size={23} aria-hidden="true" style={color ? { color } : undefined} />
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center">
+                        <Icon size={21} aria-hidden="true" className="text-ink" />
                       </span>
                       <span className="text-sm font-medium text-ink">{name}</span>
                     </li>

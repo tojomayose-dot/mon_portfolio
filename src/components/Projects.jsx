@@ -9,36 +9,36 @@ function PreviewContent({ variant, mark }) {
   if (variant === 'api') {
     return (
       <div className="flex h-full gap-2.5 p-3">
-        <div className="flex w-[23%] flex-col gap-1.5 rounded-lg border border-white/[0.06] bg-white/[0.025] p-2">
-          <span className="h-1.5 w-8 rounded-full bg-brand/70" />
-          <span className="h-1 w-full rounded-full bg-white/10" />
-          <span className="h-1 w-4/5 rounded-full bg-white/10" />
-          <span className="h-1 w-3/5 rounded-full bg-white/10" />
-          <span className="mt-auto h-5 w-full rounded border border-brand/20 bg-brand/10" />
+        <div className="flex w-[23%] flex-col gap-1.5 rounded-lg border border-line bg-ink/[0.025] p-2">
+          <span className="h-1.5 w-8 rounded-full bg-soft-blue/70" />
+          <span className="h-1 w-full rounded-full bg-ink/10" />
+          <span className="h-1 w-4/5 rounded-full bg-ink/10" />
+          <span className="h-1 w-3/5 rounded-full bg-ink/10" />
+          <span className="mt-auto h-5 w-full rounded border border-line bg-soft-blue/10" />
         </div>
         <div className="flex flex-1 flex-col gap-1.5">
-          <div className="flex items-center justify-between rounded-lg border border-white/[0.07] bg-white/[0.03] px-2 py-1.5">
-            <span className="rounded bg-emerald-400/15 px-1.5 py-0.5 font-mono text-[6px] font-bold text-emerald-300">
+          <div className="flex items-center justify-between rounded-lg border border-line bg-ink/[0.03] px-2 py-1.5">
+            <span className="rounded bg-ink/15 px-1.5 py-0.5 font-mono text-[6px] font-bold text-ink">
               POST
             </span>
-            <span className="h-1 w-1/2 rounded-full bg-white/10" />
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <span className="h-1 w-1/2 rounded-full bg-ink/10" />
+            <span className="h-1.5 w-1.5 rounded-full bg-ink" />
           </div>
-          <div className="flex items-center justify-between rounded-lg border border-white/[0.07] bg-white/[0.03] px-2 py-1.5">
-            <span className="rounded bg-brand/15 px-1.5 py-0.5 font-mono text-[6px] font-bold text-brand-light">
+          <div className="flex items-center justify-between rounded-lg border border-line bg-ink/[0.03] px-2 py-1.5">
+            <span className="rounded bg-soft-blue/15 px-1.5 py-0.5 font-mono text-[6px] font-bold text-ink">
               GET
             </span>
-            <span className="h-1 w-2/5 rounded-full bg-white/10" />
-            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+            <span className="h-1 w-2/5 rounded-full bg-ink/10" />
+            <span className="h-1.5 w-1.5 rounded-full bg-soft-blue" />
           </div>
-          <div className="relative mt-auto flex items-center justify-between overflow-hidden rounded-lg border border-brand/20 bg-brand/[0.08] px-2.5 py-2">
+          <div className="relative mt-auto flex items-center justify-between overflow-hidden rounded-lg border border-line bg-soft-blue/[0.08] px-2.5 py-2">
             <div>
-              <p className="font-mono text-[6px] uppercase tracking-[0.14em] text-brand-light">
+              <p className="font-mono text-[6px] uppercase tracking-[0.14em] text-ink">
                 Signature vérifiée
               </p>
-              <p className="mt-1 font-mono text-[9px] font-semibold text-white">{mark} · Ed25519</p>
+              <p className="mt-1 font-mono text-[9px] font-semibold text-ink">{mark} · Ed25519</p>
             </div>
-            <Lock size={16} className="text-brand-light/80" />
+            <Lock size={16} className="text-ink" />
           </div>
         </div>
       </div>
@@ -49,15 +49,15 @@ function PreviewContent({ variant, mark }) {
     return (
       <div className="h-full p-3">
         <div className="mb-2 flex items-center justify-between">
-          <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-night-muted">
+          <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-muted">
             Plan des places
           </span>
-          <span className="flex items-center gap-2 text-[6px] text-night-muted">
+          <span className="flex items-center gap-2 text-[6px] text-muted">
             <span className="inline-flex items-center gap-1">
-              <i className="h-1.5 w-1.5 rounded-full bg-brand" /> libre
+              <i className="h-1.5 w-1.5 rounded-full bg-soft-blue" /> libre
             </span>
             <span className="inline-flex items-center gap-1">
-              <i className="h-1.5 w-1.5 rounded-full bg-white/25" /> occupée
+              <i className="h-1.5 w-1.5 rounded-full bg-ink/25" /> occupée
             </span>
           </span>
         </div>
@@ -67,23 +67,23 @@ function PreviewContent({ variant, mark }) {
               key={index}
               className={`flex h-7 items-center justify-center rounded-md border ${
                 occupied
-                  ? 'border-white/10 bg-white/[0.05]'
+                  ? 'border-line bg-ink/[0.05]'
                   : index === 5
-                    ? 'border-brand bg-brand/25'
-                    : 'border-brand/20 bg-brand/[0.07]'
+                    ? 'border-line bg-soft-blue/25'
+                    : 'border-line bg-soft-blue/[0.07]'
               }`}
             >
               <span
                 className={`h-2 w-3.5 rounded-sm ${
-                  occupied ? 'bg-white/15' : index === 5 ? 'bg-brand-light/80' : 'bg-brand/40'
+                  occupied ? 'bg-ink/15' : index === 5 ? 'bg-ink/80' : 'bg-soft-blue/40'
                 }`}
               />
             </div>
           ))}
         </div>
-        <div className="mt-2 flex items-center justify-between rounded-md border border-white/[0.07] bg-white/[0.03] px-2 py-1.5">
-          <span className="h-1 w-1/3 rounded-full bg-white/10" />
-          <span className="rounded bg-brand px-2 py-0.5 text-[6px] font-semibold text-white">
+        <div className="mt-2 flex items-center justify-between rounded-md border border-line bg-ink/[0.03] px-2 py-1.5">
+          <span className="h-1 w-1/3 rounded-full bg-ink/10" />
+          <span className="rounded bg-soft-blue px-2 py-0.5 text-[6px] font-semibold text-ink">
             Réserver
           </span>
         </div>
@@ -95,7 +95,7 @@ function PreviewContent({ variant, mark }) {
     return (
       <div className="flex h-full gap-2.5 p-3">
         <div className="flex flex-1 flex-col">
-          <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-night-muted">
+          <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-muted">
             Consommation
           </span>
           <div className="mt-auto flex h-[62%] items-end gap-1.5">
@@ -104,27 +104,23 @@ function PreviewContent({ variant, mark }) {
                 key={index}
                 style={{ height: `${height}%` }}
                 className={`flex-1 rounded-t-sm ${
-                  index === 7 ? 'bg-brand' : 'bg-brand/25'
+                  index === 7 ? 'bg-soft-blue' : 'bg-soft-blue/25'
                 }`}
               />
             ))}
           </div>
-          <div className="mt-1.5 h-px w-full bg-white/10" />
+          <div className="mt-1.5 h-px w-full bg-ink/10" />
         </div>
-        <div className="flex w-[34%] flex-col items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.025] p-2">
+        <div className="flex w-[34%] flex-col items-center justify-center rounded-lg border border-line bg-ink/[0.025] p-2">
           <div
-            className="relative h-14 w-14 rounded-full"
-            style={{
-              background:
-                'conic-gradient(#3B82F6 0deg 236deg, rgba(139,92,246,0.8) 236deg 300deg, rgba(255,255,255,0.08) 300deg 360deg)',
-            }}
+            className="preview-chart relative h-14 w-14 rounded-full"
           >
-            <span className="absolute inset-2 rounded-full bg-night-surface" />
-            <span className="absolute inset-0 flex items-center justify-center font-mono text-[8px] font-semibold text-white">
+            <span className="absolute inset-2 rounded-full bg-surface" />
+            <span className="absolute inset-0 flex items-center justify-center font-mono text-[8px] font-semibold text-ink">
               MVC
             </span>
           </div>
-          <span className="mt-2 h-1 w-3/4 rounded-full bg-white/10" />
+          <span className="mt-2 h-1 w-3/4 rounded-full bg-ink/10" />
         </div>
       </div>
     );
@@ -134,10 +130,10 @@ function PreviewContent({ variant, mark }) {
     return (
       <div className="h-full p-3">
         <div className="mb-2 flex items-center justify-between">
-          <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-night-muted">
+          <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-muted">
             Commandes en cours
           </span>
-          <span className="rounded bg-brand/15 px-1.5 py-0.5 font-mono text-[6px] text-brand-light">
+          <span className="rounded bg-soft-blue/15 px-1.5 py-0.5 font-mono text-[6px] text-ink">
             Service
           </span>
         </div>
@@ -145,15 +141,15 @@ function PreviewContent({ variant, mark }) {
           {[0, 1, 2, 3].map((row) => (
             <div
               key={row}
-              className="flex items-center gap-2 rounded-md border border-white/[0.07] bg-white/[0.03] px-2 py-1.5"
+              className="flex items-center gap-2 rounded-md border border-line bg-ink/[0.03] px-2 py-1.5"
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded bg-brand/15 font-mono text-[7px] font-semibold text-brand-light">
+              <span className="flex h-5 w-5 items-center justify-center rounded bg-soft-blue/15 font-mono text-[7px] font-semibold text-ink">
                 {String(row + 1).padStart(2, '0')}
               </span>
-              <span className="h-1 flex-1 rounded-full bg-white/10" />
+              <span className="h-1 flex-1 rounded-full bg-ink/10" />
               <span
                 className={`h-1.5 w-1.5 rounded-full ${
-                  row === 0 ? 'bg-emerald-400' : row === 1 ? 'bg-brand' : 'bg-white/20'
+                  row === 0 ? 'bg-ink' : row === 1 ? 'bg-soft-blue' : 'bg-ink/20'
                 }`}
               />
             </div>
@@ -166,12 +162,12 @@ function PreviewContent({ variant, mark }) {
   if (variant === 'library') {
     return (
       <div className="h-full p-3">
-        <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-night-muted">
+        <span className="font-mono text-[7px] uppercase tracking-[0.14em] text-muted">
           Rayons
         </span>
         <div className="mt-2 space-y-2">
           {[0, 1, 2].map((shelf) => (
-            <div key={shelf} className="border-b border-white/10 pb-1.5">
+            <div key={shelf} className="border-b border-line pb-1.5">
               <div className="flex items-end gap-1">
                 {[26, 34, 22, 30, 18, 28, 24, 32].map((height, index) => (
                   <span
@@ -179,10 +175,10 @@ function PreviewContent({ variant, mark }) {
                     style={{ height }}
                     className={`w-2.5 rounded-t-sm ${
                       (shelf + index) % 4 === 0
-                        ? 'bg-brand/70'
+                        ? 'bg-soft-blue/70'
                         : (shelf + index) % 3 === 0
-                          ? 'bg-violet/60'
-                          : 'bg-white/10'
+                          ? 'bg-soft-rose/60'
+                          : 'bg-ink/10'
                     }`}
                   />
                 ))}
@@ -196,19 +192,19 @@ function PreviewContent({ variant, mark }) {
 
   return (
     <div className="h-full p-3">
-      <div className="flex items-center justify-between rounded-md border border-white/[0.07] bg-white/[0.03] px-2 py-1">
-        <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-        <span className="h-1 w-1/3 rounded-full bg-white/10" />
-        <span className="h-1 w-8 rounded-full bg-white/10" />
+      <div className="flex items-center justify-between rounded-md border border-line bg-ink/[0.03] px-2 py-1">
+        <span className="h-1.5 w-1.5 rounded-full bg-soft-blue" />
+        <span className="h-1 w-1/3 rounded-full bg-ink/10" />
+        <span className="h-1 w-8 rounded-full bg-ink/10" />
       </div>
       <div className="mt-2 grid h-[calc(100%_-_1.75rem)] grid-cols-[1.2fr_0.8fr] gap-2">
-        <div className="flex flex-col justify-center rounded-md border border-white/[0.06] bg-white/[0.025] p-2">
-          <span className="h-2 w-4/5 rounded bg-white/25" />
-          <span className="mt-1.5 h-1.5 w-full rounded bg-white/10" />
-          <span className="mt-1 h-1.5 w-2/3 rounded bg-white/10" />
-          <span className="mt-2 h-4 w-14 rounded bg-brand" />
+        <div className="flex flex-col justify-center rounded-md border border-line bg-ink/[0.025] p-2">
+          <span className="h-2 w-4/5 rounded bg-ink/25" />
+          <span className="mt-1.5 h-1.5 w-full rounded bg-ink/10" />
+          <span className="mt-1 h-1.5 w-2/3 rounded bg-ink/10" />
+          <span className="mt-2 h-4 w-14 rounded bg-soft-blue" />
         </div>
-        <div className="rounded-md border border-brand/20 bg-gradient-to-br from-brand/20 to-violet/10" />
+        <div className="rounded-md border border-line bg-gradient-to-br from-soft-blue/20 to-soft-rose/10" />
       </div>
     </div>
   );
@@ -217,13 +213,13 @@ function PreviewContent({ variant, mark }) {
 function ProjectPreview({ project }) {
   if (project.image) {
     return (
-      <div className="aspect-[2/1] overflow-hidden rounded-[10px] bg-page">
+      <div data-tone={project.tone} className="project-artwork aspect-video overflow-hidden rounded-[10px] bg-page">
         <img
           src={project.image}
-          alt={`Aperçu du projet ${project.title}`}
+          alt={project.imageAlt || `Aperçu du projet ${project.title}`}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
         />
       </div>
     );
@@ -233,21 +229,21 @@ function ProjectPreview({ project }) {
     <div
       role="img"
       aria-label={`Illustration conceptuelle du projet ${project.title}, sans capture réelle`}
-      className="relative aspect-[2/1] overflow-hidden rounded-[10px] bg-night"
+      className="relative project-artwork aspect-video overflow-hidden rounded-[10px] bg-page"
     >
       <div aria-hidden="true" className="hero-halo absolute inset-0 opacity-80" />
-      <span className="absolute right-3 top-3 z-20 rounded-full border border-white/15 bg-night/55 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.16em] text-night-muted backdrop-blur">
+      <span className="absolute right-3 top-3 z-20 rounded-full border border-line bg-page/55 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.16em] text-muted backdrop-blur">
         Illustration
       </span>
       <div
         aria-hidden="true"
-        className="absolute inset-x-5 bottom-0 top-6 overflow-hidden rounded-t-xl border border-white/10 bg-night-surface shadow-2xl shadow-black/50 transition-transform duration-500 group-hover:-translate-y-1"
+        className="absolute inset-x-5 bottom-0 top-6 overflow-hidden rounded-t-xl border border-line bg-surface shadow-card transition-transform duration-500 group-hover:-translate-y-1"
       >
-        <div className="flex items-center gap-1.5 border-b border-white/[0.07] px-3 py-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand/70" />
-          <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
-          <span className="h-1.5 w-1.5 rounded-full bg-white/10" />
-          <span className="ml-2 truncate font-mono text-[7px] uppercase tracking-[0.16em] text-night-muted">
+        <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-soft-blue/70" />
+          <span className="h-1.5 w-1.5 rounded-full bg-surface/20" />
+          <span className="h-1.5 w-1.5 rounded-full bg-surface/10" />
+          <span className="ml-2 truncate font-mono text-[7px] uppercase tracking-[0.16em] text-muted">
             {project.mark} · {project.subtitle}
           </span>
         </div>
@@ -266,7 +262,7 @@ function ProjectCard({ project, onSelect }) {
 
   return (
     <article
-      className="card group flex h-full flex-col overflow-hidden p-3 transition duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-card-hover"
+      className="card project-card group flex h-full flex-col overflow-hidden p-3 transition duration-300 hover:-translate-y-1 hover:border-line hover:shadow-card-hover"
     >
       <ProjectPreview project={project} />
 
@@ -276,13 +272,13 @@ function ProjectCard({ project, onSelect }) {
             <div className="flex flex-wrap items-center gap-2">
               <h3
                 className={`text-lg font-bold tracking-[-0.025em] text-ink ${
-                  hasLink ? 'transition-colors duration-200 group-hover:text-brand-ink' : ''
+                  hasLink ? 'transition-colors duration-200 group-hover:text-ink' : ''
                 }`}
               >
                 {project.title}
               </h3>
               {project.badge && (
-                <span className="inline-flex items-center rounded-full bg-brand/10 px-2.5 py-0.5 text-[10px] font-semibold text-brand-ink">
+                <span className="inline-flex items-center rounded-full bg-soft-blue/10 px-2.5 py-0.5 text-[10px] font-semibold text-ink">
                   {project.badge}
                 </span>
               )}
@@ -294,13 +290,14 @@ function ProjectCard({ project, onSelect }) {
             onClick={() => onSelect(project)}
             aria-label={`Voir les détails du projet ${project.title}`}
             aria-haspopup="dialog"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-page text-ink transition-colors hover:bg-brand-strong hover:text-white"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-btn bg-accent px-3 text-xs font-semibold text-on-accent transition-colors hover:bg-accent-hover"
           >
-            <ArrowUpRight size={19} aria-hidden="true" />
+            <span>Voir le projet</span><ArrowUpRight size={16} aria-hidden="true" className="project-arrow" />
           </button>
         </div>
 
         <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{project.description}</p>
+        {project.contribution && <p className="mt-3 text-sm leading-relaxed text-ink"><span className="font-semibold">Ma contribution : </span>{project.contribution}</p>}
 
         <ul className="mt-auto flex flex-wrap gap-2 pt-4" aria-label={`Technologies du projet ${project.title}`}>
           {visibleTags.map((tag) => (
@@ -345,7 +342,7 @@ function ProjectGallery({ project }) {
             onClick={() => setActiveIndex(index)}
             aria-label={`Afficher la capture ${index + 1} : ${screenshot.alt}`}
             aria-pressed={activeIndex === index}
-            className={`min-h-11 overflow-hidden rounded-lg border-2 p-1 transition-colors ${activeIndex === index ? 'border-brand-strong' : 'border-line hover:border-brand/50'}`}
+            className={`min-h-11 overflow-hidden rounded-lg border-2 p-1 transition-colors ${activeIndex === index ? 'border-accent' : 'border-line hover:border-control'}`}
           >
             <img src={screenshot.src} alt="" loading="lazy" decoding="async" className="aspect-video w-full rounded object-contain" />
           </button>
@@ -414,17 +411,17 @@ export default function Projects() {
   );
 
   return (
-    <section id="projects" aria-labelledby="projects-title" className="scroll-mt-24 bg-page py-16 sm:py-20">
+    <section id="projects" aria-labelledby="projects-title" className="scroll-mt-24 bg-page py-12 sm:py-20">
       <div className="shell">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <Reveal className="max-w-2xl">
             <p className="eyebrow">
-              <span className="flex h-5 w-5 items-center justify-center rounded-[5px] border border-brand/25 bg-brand/10 text-brand-ink">
+              <span className="flex h-5 w-5 items-center justify-center rounded-[5px] border border-line bg-soft-blue/10 text-ink">
                 <LayoutGrid size={11} aria-hidden="true" />
               </span>
               Mes réalisations
             </p>
-            <h2 id="projects-title" className="mt-3 text-[clamp(1.8rem,3vw,2.6rem)] font-extrabold leading-[1.08] tracking-[-0.045em] text-ink">
+            <h2 id="projects-title" className="mt-3 text-[clamp(1.8rem,3vw,2.6rem)] font-bold leading-[1.08] tracking-[-0.025em] text-ink">
               {showAll ? 'Tous mes projets' : 'Projets sélectionnés'}
             </h2>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-muted">
@@ -436,7 +433,7 @@ export default function Projects() {
             aria-expanded={showAll}
             aria-controls="project-list project-filters"
             onClick={() => { setShowAll((value) => !value); setActiveCategory('all'); }}
-            className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start text-sm font-semibold text-brand-ink hover:text-brand-strong sm:self-auto"
+            className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start text-sm font-semibold text-ink underline underline-offset-4 hover:text-ink sm:self-auto"
           >
             {showAll ? 'Voir la sélection' : 'Voir tous les projets'}
             <ArrowRight size={16} aria-hidden="true" />
@@ -446,14 +443,14 @@ export default function Projects() {
         <div id="project-filters" hidden={!showAll} className="mt-7">
           <div role="group" aria-label="Filtrer les projets par catégorie" className="flex flex-wrap gap-2">
             {projectCategories.map((category) => (
-              <button key={category.id} type="button" aria-pressed={activeCategory === category.id} onClick={() => setActiveCategory(category.id)} className={`min-h-11 rounded-[10px] border px-4 py-2 text-sm font-medium transition-colors ${activeCategory === category.id ? 'border-brand-strong bg-brand-strong text-white' : 'border-line bg-surface text-muted hover:text-brand-ink'}`}>
+              <button key={category.id} type="button" aria-pressed={activeCategory === category.id} onClick={() => setActiveCategory(category.id)} className={`min-h-11 rounded-[10px] border px-4 py-2 text-sm font-medium transition-colors ${activeCategory === category.id ? 'border-control bg-accent text-on-accent' : 'border-control bg-transparent text-ink hover:bg-soft-rose'}`}>
                 {category.label}
               </button>
             ))}
           </div>
         </div>
         <p className="sr-only" role="status">{visibleProjects.length} projets affichés.</p>
-        <motion.ul id="project-list" layout={!reducedMotion} className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.ul id="project-list" layout={!reducedMotion} className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
           <AnimatePresence mode="popLayout" initial={false}>
             {visibleProjects.map((project) => (
               <motion.li key={project.title} layout={!reducedMotion} initial={reducedMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={reducedMotion ? undefined : { opacity: 0, scale: 0.98 }} transition={{ duration: reducedMotion ? 0 : 0.28 }} className="h-full">
